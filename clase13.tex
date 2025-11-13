@@ -1,0 +1,252 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, bm}
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}
+
+% ==== Título ====
+\title{Unidad 3: Variables Aleatorias y Medidas (en Ingeniería de Sistemas)}
+\author{UNI — Ricardo Largaespada}
+\date{}
+
+\begin{document}
+\frame{\titlepage}
+
+% =========================================================
+\section{3.1 Variable aleatoria, pmf/pdf}
+
+\begin{frame}{Variable aleatoria}
+\begin{block}{Definición}
+Una \textbf{variable aleatoria} (v.a.) es una función $X:\Omega\to\mathbb{R}$ que asigna a cada resultado $\omega$ de un experimento aleatorio un número real.
+\end{block}
+
+\begin{alertblock}{Tipos}
+\begin{itemize}
+  \item \textbf{Discreta}: soporte finito o numerable ($\{0,1,2,\dots\}$). Ej: \emph{conteo de solicitudes HTTP por segundo}.
+  \item \textbf{Continua}: toma valores en intervalos. Ej: \emph{tiempo de respuesta (ms) de un microservicio}.
+\end{itemize}
+\end{alertblock}
+
+\begin{exampleblock}{Ingeniería de Sistemas}
+\begin{itemize}
+  \item $N$: \# de paquetes que llegan al \emph{load balancer} por segundo (Poisson).
+  \item $T$: tiempo de servicio de una API en ms (Exponencial/Normal truncada).
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{pmf (discreta) y pdf (continua)}
+\begin{block}{Discreta: función de probabilidad (pmf)}
+$p_X(x)=P(X=x)$, $p_X(x)\ge 0$, \quad $\sum_{x} p_X(x)=1$.
+\end{block}
+
+\begin{block}{Continua: densidad de probabilidad (pdf)}
+$f_X(x)\ge 0$, \quad $P(a<X\le b)=\displaystyle\int_a^b f_X(x)\,dx$, \quad
+$\int_{-\infty}^{\infty} f_X(x)\,dx=1$.
+\end{block}
+
+\begin{alertblock}{Conexión con la cdf $F$}
+$F_X(x)=P(X\le x)=\sum_{t\le x} p_X(t)$ (discreta) \quad o \quad $F_X(x)=\int_{-\infty}^x f_X(t)\,dt$ (continua). \\
+Si $F$ es derivable, entonces $f=F'$.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Modelos de uso frecuente en Sistemas}
+\begin{exampleblock}{Discretas}
+\begin{itemize}
+  \item \textbf{Bernoulli}$(p)$: éxito/fallo (p.ej., petición \emph{OK}).
+  \item \textbf{Binomial}$(n,p)$: \# de éxitos en $n$ pruebas (tests que pasan).
+  \item \textbf{Poisson}$(\lambda)$: \# de llegadas por unidad de tiempo (paquetes).
+\end{itemize}
+\end{exampleblock}
+
+\begin{exampleblock}{Continuas}
+\begin{itemize}
+  \item \textbf{Uniforme}$(a,b)$: \emph{random backoff} en $[a,b]$ ms.
+  \item \textbf{Exponencial}$(\lambda)$: tiempos entre llegadas o servicio (cola M/M/1).
+  \item \textbf{Normal}$(\mu,\sigma^2)$: latencias agregadas (por CLT, con cautela ante colas pesadas).
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Mini-ejercicio 1 — pmf/pdf (con respuesta)}
+\begin{exampleblock}{Contexto}
+Un servicio usa \emph{random backoff} $B\sim\text{Uniforme}(20, 60)$ ms.
+\end{exampleblock}
+
+\textbf{Pida:}
+\begin{enumerate}
+  \item $P(30 < B \le 45)$.
+  \item La densidad $f_B$ y la cdf $F_B(x)$.
+\end{enumerate}
+
+\pause
+\textbf{Respuesta}
+\begin{enumerate}
+  \item $P=\dfrac{45-30}{60-20}=\dfrac{15}{40}=0.375$.
+  \item $f_B(x)=\frac{1}{40}$ en $(20,60)$; \ $F_B(x)=\frac{x-20}{40}$ en $(20,60)$.
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\section{3.2 Función de distribución acumulada (cdf)}
+
+\begin{frame}{cdf: definición y propiedades}
+\begin{block}{Definición}
+$F_X(x)=P(X\le x)$.
+\end{block}
+
+\begin{alertblock}{Propiedades clave}
+\begin{enumerate}
+  \item Monótona no decreciente, $0\le F\le 1$.
+  \item $\lim_{x\to-\infty}F(x)=0$, $\lim_{x\to\infty}F(x)=1$.
+  \item Continua por la derecha; en discretas, los \emph{saltos} son $P(X=x)$.
+  \item $P(a<X\le b)=F(b)-F(a)$ (general).
+\end{enumerate}
+\end{alertblock}
+
+\begin{exampleblock}{Lectura operativa (SLO)}
+Si $T$ es la \emph{latencia} (ms) de una API, $F_T(t)=P(T\le t)$ es el \% de peticiones que cumplen el SLO $t$.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Mini-ejercicio 2 — cdf y SLO (con respuesta)}
+\begin{exampleblock}{Contexto}
+Latencia $T\sim\text{Exponencial}(\lambda=0.02)$ (media $50$ ms).
+\end{exampleblock}
+
+\textbf{Pida:}
+\begin{enumerate}
+  \item Porcentaje bajo SLO de $t=40$ ms: $F_T(40)$.
+  \item $P(40<T\le 80)$ usando la cdf.
+\end{enumerate}
+
+\pause
+\textbf{Respuesta}
+\begin{enumerate}
+  \item $F_T(40)=1-e^{-0.02\cdot 40}=1-e^{-0.8}\approx 0.5507$ (55.07\%).
+  \item $F_T(80)-F_T(40)=\left(1-e^{-1.6}\right)-\left(1-e^{-0.8}\right)=e^{-0.8}-e^{-1.6}\approx 0.2466$.
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\section{3.3 Esperanza, varianza y desviación estándar}
+
+\begin{frame}{Medidas: definiciones}
+\begin{block}{Valor esperado}
+\[
+\mathbb{E}[X]=\sum_x x\,p(x) \quad \text{o} \quad \mathbb{E}[X]=\int_{-\infty}^{\infty} x\,f(x)\,dx.
+\]
+\end{block}
+
+\begin{block}{Varianza y desviación}
+\[
+\operatorname{Var}(X)=\mathbb{E}[X^2]-\big(\mathbb{E}[X]\big)^2,\qquad \sigma_X=\sqrt{\operatorname{Var}(X)}.
+\]
+\end{block}
+
+\begin{alertblock}{Propiedades operativas}
+\begin{itemize}
+  \item \textbf{Linealidad:} $\mathbb{E}[aX+bY+c]=a\mathbb{E}[X]+b\mathbb{E}[Y]+c$.
+  \item \textbf{Escala y desplazamiento:} $\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)$.
+  \item Si $X,Y$ independientes: $\operatorname{Var}(X+Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)$.
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Fichas rápidas para modelos de sistemas}
+\begin{exampleblock}{Parámetros}
+\begin{itemize}
+  \item \textbf{Poisson}$(\lambda)$ (llegadas/seg): $\mathbb{E}[N]=\lambda$, $\operatorname{Var}(N)=\lambda$.
+  \item \textbf{Exponencial}$(\lambda)$ (tiempo entre llegadas/servicio): $\mathbb{E}[T]=1/\lambda$, $\operatorname{Var}(T)=1/\lambda^2$ (memoria cero).
+  \item \textbf{Uniforme}$(a,b)$ (\emph{backoff}): $\mathbb{E}[B]=(a+b)/2$, $\operatorname{Var}(B)=(b-a)^2/12$.
+  \item \textbf{Binomial}$(n,p)$ (\# peticiones exitosas en lote): $\mathbb{E}[X]=np$, $\operatorname{Var}(X)=np(1-p)$.
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Mini-ejercicio 3 — rendimiento (con respuesta)}
+\begin{exampleblock}{Contexto}
+Un \emph{autoscaler} dispara cuando el \# de peticiones exitosas en un lote de $n=100$ cae por debajo de 60. Cada petición es exitosa con probabilidad $p=0.75$ (independientes).
+\end{exampleblock}
+
+\textbf{Pida:}
+\begin{enumerate}
+  \item $\mathbb{E}[X]$ y $\sigma_X$ para $X\sim\text{Binomial}(100,0.75)$.
+  \item Aproximando por Normal, $P(X<60)$.
+\end{enumerate}
+
+\pause
+\textbf{Respuesta}
+\begin{enumerate}
+  \item $\mathbb{E}[X]=75$, \quad $\sigma_X=\sqrt{100\cdot 0.75\cdot 0.25}=\sqrt{18.75}\approx 4.330$.
+  \item $Z=\dfrac{59.5-75}{4.33}\approx -3.58 \Rightarrow P\approx 0.00017$ (muy raro).
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Mini-ejercicio 4 — confiabilidad de microservicios (con respuesta)}
+\begin{exampleblock}{Contexto}
+Un request pasa por dos microservicios en serie. Tiempos de servicio independientes $T_1\sim\text{Exp}(0.03)$ y $T_2\sim\text{Exp}(0.02)$ (ms$^{-1}$). El SLO es $T_1+T_2\le 80$ ms.
+\end{exampleblock}
+
+\textbf{Pida:}
+\begin{enumerate}
+  \item $\mathbb{E}[T_1+T_2]$ y $\operatorname{Var}(T_1+T_2)$.
+  \item $P(T_1\le 30)$ y $P(T_1>40\mid T_1>20)$ (memoria cero).
+\end{enumerate}
+
+\pause
+\textbf{Respuesta}
+\begin{enumerate}
+  \item $\mathbb{E}[T_1+T_2]=\tfrac{1}{0.03}+\tfrac{1}{0.02}=33.\overline{3}+50=83.\overline{3}$ ms; \\
+        $\operatorname{Var}=\tfrac{1}{0.03^2}+\tfrac{1}{0.02^2}\approx 1111.1+2500=3611.1$ (ms$^2$).
+  \item $P(T_1\le 30)=1-e^{-0.03\cdot 30}=1-e^{-0.9}\approx 0.5934$. \\
+        $P(T_1>40\mid T_1>20)=e^{-0.03\cdot(40-20)}=e^{-0.6}\approx 0.5488$.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Mini-ejercicio 5 — cdf y percentiles (con respuesta)}
+\begin{exampleblock}{Contexto}
+La latencia $L$ (ms) de un servicio se modela Normal$(\mu=120,\sigma=20)$ (aprox. tras \emph{trimming}).
+\end{exampleblock}
+
+\textbf{Pida:}
+\begin{enumerate}
+  \item $F_L(150)$ (porcentaje que cumple SLO 150 ms).
+  \item El percentil 95 (p95).
+\end{enumerate}
+
+\pause
+\textbf{Respuesta}
+\begin{enumerate}
+  \item $Z=\frac{150-120}{20}=1.5 \Rightarrow F\approx 0.9332$ (93.32\% cumple).
+  \item $z_{0.95}\approx 1.645 \Rightarrow p95 = 120+1.645\cdot 20 \approx 152.9$ ms.
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\section*{Quick checks}
+
+\begin{frame}{Chequeos relámpago (respuestas con \texttt{\textbackslash pause})}
+\begin{enumerate}
+  \item Si $X$ es continua, $P(X=x)=\,$\pause $0$.
+  \item Si $F$ salta $0.1$ en $x_0$, entonces $P(X=x_0)=\,$\pause $0.1$ (masa discreta).
+  \item Para $B\sim\text{Uniforme}(a,b)$, $\operatorname{Var}(B)=\,$\pause $(b-a)^2/12$.
+  \item Si $Y=aX+b$, $\operatorname{Var}(Y)=\,$\pause $a^2\operatorname{Var}(X)$.
+  \item En Poisson$(\lambda)$, $\mathbb{E}[N]=\,$\pause $\lambda$ y $\operatorname{Var}(N)=\,$\pause $\lambda$.
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\section*{Cierre}
+\begin{frame}{Cierre y ligas con IO / Colas}
+\begin{itemize}
+  \item \textbf{pmf/pdf/cdf} como base para SLOs, confiabilidad y A/B testing.
+  \item \textbf{Esperanza/Varianza} $\Rightarrow$ capacidad, \emph{autoscaling}, colchones de latencia.
+  \item Próximo: conectar con \textbf{colas M/M/1} y métricas $W_q, L_q$ usando Exponencial/Poisson.
+\end{itemize}
+\end{frame}
+
+\end{document}

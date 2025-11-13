@@ -1,0 +1,201 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage[nosetup]{evan}
+\usetheme{Goddard}
+\hypersetup{colorlinks,allcolors=.,urlcolor=magenta}
+\usepackage[table]{xcolor} % Para definir colores en tablas
+\usepackage{graphicx} % Para redimensionar la tabla
+
+\title{Clase Práctica}
+\subtitle{Unidad 2: Introducción a la Teoría de Probabilidades}
+\author{Ricardo Jesús Largaespada Fernández}
+\institute{Ingeniería de Sistemas, DACTIC, UNI}
+\date{\today}
+
+\begin{document}
+\frame{\titlepage}
+
+% ===================== 1
+\section{Conteo y permutaciones}
+
+\begin{frame}{Tres parejas en una fila}
+Seis estudiantes (tres parejas) se sientan en una fila de seis butacas. \\
+\textbf{Calcule el número de formas de sentarse} en cada caso:
+\begin{enumerate}
+  \item Sin restricciones.
+  \item Cada pareja debe sentarse junta (por parejas).
+  \item Todas las mujeres ocupan las tres butacas de la izquierda y todos los hombres las tres de la derecha.
+\end{enumerate}
+\medskip\pause
+\textbf{Respuestas}
+\begin{enumerate}
+  \item $6!=720$.
+  \item Trato cada pareja como bloque: $3!\,(2!)^3=48$.
+  \item Permutar mujeres y hombres por separado: $3!\cdot 3!=36$.
+\end{enumerate}
+\end{frame}
+
+% ===================== 2
+\section{Órdenes aleatorios}
+
+\begin{frame}{Difusión de un rumor}
+A quiere contar un rumor a cinco amigos $B,C,D,E,F$. Empieza eligiendo al azar a uno; a partir de ahí, en cada paso alguien que ya lo oyó se lo cuenta a \emph{una persona nueva}, hasta que todos lo oyen. \\
+\textbf{Calcule las probabilidades}:
+\begin{enumerate}
+  \item Que el orden exacto sea $B,C,D,E,F$.
+  \item Que $F$ sea la tercera persona en escucharlo.
+  \item Que $F$ sea la última en escucharlo.
+\end{enumerate}
+\medskip\pause
+\textbf{Respuestas}
+\begin{enumerate}
+  \item Orden uniforme de 5 personas: $1/5!=1/120$.
+  \item Cualquier persona es igualmente probable en cada posición: $1/5=0.2$.
+  \item Idem: $1/5=0.2$.
+\end{enumerate}
+\end{frame}
+
+% ===================== 3
+\section{Muestreo sin reemplazo (Hipergeométrica)}
+
+\begin{frame}{Computadoras defectuosas}
+Un lote tiene 50 computadoras, de las cuales 5 son defectuosas. Se extraen 2 \emph{sin reemplazo}. \\
+\textbf{Calcule}:
+\begin{enumerate}
+  \item $P(\text{segunda defectuosa}\mid \text{primera defectuosa})$.
+  \item $P(\text{ambas defectuosas})$.
+  \item $P(\text{ambas aceptables})$.
+\end{enumerate}
+\medskip\pause
+\textbf{Respuestas}
+\begin{enumerate}
+  \item Quedan $4$ defectuosas de $49$: $4/49$.
+  \item $(5/50)\cdot(4/49)=2/245\approx 0.00816$.
+  \item $(45/50)\cdot(44/49)=198/245\approx 0.808$.
+\end{enumerate}
+\end{frame}
+
+% ===================== 4
+\section{Ensayos independientes (Binomial)}
+
+\begin{frame}{Centro de verificación de emisiones}
+Cada vehículo pasa con probabilidad $p=0.7$ e independencia entre vehículos. Se inspeccionan 3 vehículos. \\
+\textbf{Calcule}:
+\begin{enumerate}
+  \item Probabilidad de que los tres pasen.
+  \item Probabilidad de que al menos uno pase.
+  \item Probabilidad de que exactamente uno pase.
+  \item Probabilidad de que a lo más uno pase.
+  \item Probabilidad de que los tres pasen dado que al menos uno pasa.
+\end{enumerate}
+\medskip\pause
+\textbf{Respuestas}
+\begin{enumerate}
+  \item $0.7^3=0.343$.
+  \item $1-0.3^3=0.973$.
+  \item $\binom31(0.7)(0.3)^2=0.189$.
+  \item $0.3^3+3(0.7)(0.3)^2=0.216$.
+  \item $\dfrac{0.7^3}{1-0.3^3}\approx 0.3525$.
+\end{enumerate}
+\end{frame}
+
+% ===================== 5
+\section{Probabilidad total y condicional}
+
+\begin{frame}{Elección de gasolina y llenar el tanque}
+En una gasolinera: $40\%$ usa regular ($A_1$), $35\%$ plus ($A_2$), $25\%$ premium ($A_3$). \\
+Probabilidades de llenar el tanque ($B$): $P(B\mid A_1)=0.30$, $P(B\mid A_2)=0.60$, $P(B\mid A_3)=0.50$. \\
+\textbf{Calcule}:
+\begin{enumerate}
+  \item Probabilidad de que el cliente pida plus y llene el tanque.
+  \item Probabilidad de que el cliente (sin importar tipo) llene el tanque.
+\end{enumerate}
+\medskip\pause
+\textbf{Respuestas}
+\begin{enumerate}
+  \item $P(A_2\cap B)=0.35\cdot 0.60=0.21$.
+  \item $P(B)=0.40(0.30)+0.35(0.60)+0.25(0.50)=0.455$.
+\end{enumerate}
+\end{frame}
+
+% ===================== 6
+\section{Independencia simple}
+
+\begin{frame}{Permanencia laboral de dos personas}
+La probabilidad de permanecer al menos 10 años en la empresa es $1/6$. Dos personas inician el mismo día, de forma independiente. \\
+\textbf{Calcule}:
+\begin{enumerate}
+  \item Probabilidad de que la primera permanezca menos de 10 años.
+  \item Probabilidad de que ambas permanezcan menos de 10 años.
+  \item Probabilidad de que al menos una permanezca 10 años o más.
+\end{enumerate}
+\medskip\pause
+\textbf{Respuestas}
+\begin{enumerate}
+  \item $5/6$.
+  \item $(5/6)^2=25/36$.
+  \item $1-(5/6)^2=11/36$.
+\end{enumerate}
+\end{frame}
+
+% ===================== 7
+\section{Conjuntos e inclusión–exclusión}
+
+\begin{frame}{Resultados en tres ejercicios}
+De $N=398$ estudiantes: \\
+\quad $|A|=321$ (al menos el 1°), $|B|=210$ (al menos el 2°), $|C|=200$ (al menos el 3°); \\
+\quad $|A\cap B|=141$, $|B\cap C|=138$, $|A\cap B\cap C|=83$; \\
+\quad $4$ no resolvieron ninguno. \\
+\textbf{Calcule las probabilidades}:
+\begin{enumerate}
+  \item Exactamente el 1° y el 3°.
+  \item Exactamente el 1°.
+  \item El 1° y el 3° (al menos esos dos).
+  \item Al menos dos ejercicios.
+  \item A lo sumo dos ejercicios.
+\end{enumerate}
+\medskip\pause
+\textbf{Resultados intermedios}
+\[
+|A\cup B\cup C|=394 \Rightarrow |A\cap C|=141.
+\]
+Exactos: $ab=58,\; bc=55,\; ac=58,\; a=122,\; b=14,\; c=4,\; abc=83$. \\
+\pause
+\textbf{Respuestas} (sobre $398$)
+\begin{enumerate}
+  \item $58/398=29/199\approx 0.1457$.
+  \item $122/398=61/199\approx 0.3065$.
+  \item $141/398\approx 0.3543$.
+  \item $(58+58+55+83)/398=127/199\approx 0.638$.
+  \item $(398-83)/398=315/398\approx 0.791$.
+\end{enumerate}
+\end{frame}
+
+% ===================== 8
+\section{Bayes}
+
+\begin{frame}{Pregunta de opción múltiple}
+Una pregunta tiene 4 opciones. La probabilidad de que el estudiante \emph{sepa} la respuesta es $0.8$; si no la sabe, contesta al azar (probabilidad de acierto $0.25$). Si el estudiante \emph{acierta}, \textbf{calcule} la probabilidad de que realmente la supiera.
+\medskip\pause
+
+\[
+P(\text{sabe}\mid \text{acierta})
+=\frac{1\cdot 0.8}{1\cdot 0.8+0.25\cdot 0.2}
+=\frac{0.8}{0.85}
+=\boxed{\frac{16}{17}\approx 0.9412}.
+\]
+\end{frame}
+
+% ===================== cierre
+\section*{Cierre}
+\begin{frame}{Cierre}
+\begin{itemize}
+  \item Cadena de ideas: permutaciones $\rightarrow$ órdenes aleatorios $\rightarrow$ hipergeométrica/binomial.
+  \item Herramientas clave: probabilidad total, independencia, inclusión–exclusión, Bayes.
+\end{itemize}
+\end{frame}
+
+\end{document}

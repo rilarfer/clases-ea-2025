@@ -1,0 +1,357 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage[nosetup]{evan}
+\usetheme{Goddard}
+\hypersetup{colorlinks,allcolors=.,urlcolor=magenta}
+\usepackage[table]{xcolor} % Para definir colores en tablas
+\usepackage{graphicx} % Para redimensionar la tabla
+
+\title{Estadística Aplicada}
+\subtitle{Unidad 1: Estadística Descriptiva}
+\author{Ricardo Jesús Largaespada Fernández}
+\institute{Ingeniería de Sistemas, DACTIC, UNI}
+\date{\today}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Objetivo de la clase}
+\begin{itemize}
+  \item Aplicar las medidas estadísticas de forma analítica y gráfica en la resolución e interpretación de problemas contextualizados.
+  \item Interpretar los resultados obtenidos a partir de las medidas de tendencia central, variabilidad y posición, identificando su utilidad en diferentes contextos.
+  \item Utilizar representaciones gráficas para apoyar el análisis y la comunicación de conclusiones estadísticas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Agenda}
+\tableofcontents
+\end{frame}
+
+% ==============================
+\section{Medidas de Tendencia Central}
+% ==============================
+\begin{frame}{Media aritmética}
+\textbf{Media aritmética:} valor promedio de los datos.
+\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\qquad
+\mu = \frac{1}{N}\sum_{i=1}^N X_i
+\]
+
+\textbf{Datos agrupados:}
+\[
+\bar{x} = \frac{\sum_{i=1}^{k} f_i X_i}{n}, 
+\quad n=\sum f_i
+\]
+
+\begin{itemize}
+\item $x_i$: datos individuales
+\item $X_i$: marca de clase
+\item $f_i$: frecuencia absoluta
+\end{itemize}
+\end{frame}
+
+\begin{frame}{La mediana}
+\textbf{Mediana:} valor central que divide la muestra en dos mitades.
+
+\textbf{Datos agrupados:}
+\[
+M_e = Li + \left(\frac{\tfrac{n}{2}-F}{f}\right)\cdot C
+\]
+
+\begin{itemize}
+\item $Li$: límite inferior real del intervalo mediano
+\item $F$: frecuencia acumulada antes del intervalo
+\item $f$: frecuencia del intervalo mediano
+\item $C$: amplitud de clase
+\end{itemize}
+
+\textbf{Datos no agrupados:}
+\[
+M_e = 
+\begin{cases}
+x_{\left(\tfrac{n+1}{2}\right)}, & n \text{ impar}\\[6pt]
+\dfrac{x_{\tfrac{n}{2}} + x_{\tfrac{n}{2}+1}}{2}, & n \text{ par}
+\end{cases}
+\]
+\end{frame}
+
+\begin{frame}{La moda}
+\textbf{Moda:} valor con mayor frecuencia.
+
+\textbf{Datos agrupados:}
+\[
+M_o = Li + \left(\frac{\Delta_1}{\Delta_1+\Delta_2}\right)C
+\]
+\begin{itemize}
+\item $\Delta_1 =$ frecuencia modal – frecuencia anterior
+\item $\Delta_2 =$ frecuencia modal – frecuencia posterior
+\item $C =$ amplitud de clase
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Formas de la distribución (simetría)}
+\centering
+\begin{tikzpicture}[scale=1.0]
+\draw[->] (-3,0)--(3,0);
+\draw plot[smooth,domain=-3:3,samples=100] (\x,{exp(-\x*\x/2)});
+\node at (0,-0.3) {$M_o=M_e=\bar{x}$};
+\end{tikzpicture}
+
+\begin{itemize}
+\item \textbf{Simétrica:} $M_o=M_e=\bar{x}$
+\item \textbf{Asimétrica positiva:} $M_o < M_e < \bar{x}$
+\item \textbf{Asimétrica negativa:} $\bar{x}<M_e<M_o$
+\end{itemize}
+\end{frame}
+
+% --- Asimetría positiva (sesgo a la derecha) ---
+\begin{frame}{Formas de la distribución: Asimetría positiva}
+\centering
+\begin{tikzpicture}[x=1cm,y=2.2cm]
+  % Eje
+  \draw[->] (0,0) -- (8.4,0);
+
+  % Curva tipo Gamma (cola a la derecha)
+  \draw[thick] plot[smooth, domain=0:8, samples=240]
+    (\x, {(\x/2.2)^2 * exp(-\x/1.2)});
+
+  % Líneas de Mo < Me < x̄
+  \draw[densely dashed] (2.0,0) -- (2.0,{(2.0/2.2)^2*exp(-2.0/1.2)});
+  \draw[densely dashed] (3.2,0) -- (3.2,{(3.2/2.2)^2*exp(-3.2/1.2)});
+  \draw[densely dashed] (4.3,0) -- (4.3,{(4.3/2.2)^2*exp(-4.3/1.2)});
+
+  % Etiquetas
+  \node[below] at (2.0,0) {$M_o$};
+  \node[below] at (3.2,0) {$M_e$};
+  \node[below] at (4.3,0) {$\bar{x}$};
+\end{tikzpicture}
+
+\medskip
+\small En asimetría positiva: \(M_o < M_e < \bar{x}\).
+\end{frame}
+
+% --- Asimetría negativa (sesgo a la izquierda) ---
+\begin{frame}{Formas de la distribución: Asimetría negativa}
+\centering
+\begin{tikzpicture}[x=1cm,y=2.2cm]
+  % Eje
+  \draw[->] (0,0) -- (8.4,0);
+
+  % Curva espejo (cola a la izquierda)
+  \draw[thick] plot[smooth, domain=0:8, samples=240]
+    (\x, {((8-\x)/2.2)^2 * exp(-(8-\x)/1.2)});
+
+  % Líneas de x̄ < Me < Mo
+  \draw[densely dashed] (2.7,0) -- (2.7,{((8-2.7)/2.2)^2*exp(-(8-2.7)/1.2)});
+  \draw[densely dashed] (3.8,0) -- (3.8,{((8-3.8)/2.2)^2*exp(-(8-3.8)/1.2)});
+  \draw[densely dashed] (5.0,0) -- (5.0,{((8-5.0)/2.2)^2*exp(-(8-5.0)/1.2)});
+
+  % Etiquetas
+  \node[below] at (2.7,0) {$\bar{x}$};
+  \node[below] at (3.8,0) {$M_e$};
+  \node[below] at (5.0,0) {$M_o$};
+\end{tikzpicture}
+
+\medskip
+\small En asimetría negativa: \(\bar{x} < M_e < M_o\).
+\end{frame}
+
+% ==============================
+\section{Medidas de Posición}
+% ==============================
+\begin{frame}{Cuartiles, deciles y percentiles}
+\textbf{Datos agrupados:}
+\[
+Q_i = Li + \left(\frac{\tfrac{i n}{4}-F}{f}\right)C
+\quad (i=1,2,3,4)
+\]
+
+\[
+D_i = Li + \left(\frac{\tfrac{i n}{10}-F}{f}\right)C
+\quad (i=1,2,\dots,10)
+\]
+
+\[
+P_i = Li + \left(\frac{\tfrac{i n}{100}-F}{f}\right)C
+\quad (i=1,2,\dots,100)
+\]
+\end{frame}
+
+\begin{frame}{Cuartiles en datos no agrupados}
+\textbf{Si $n$ es impar:}
+\[
+Q_2 = x_{\tfrac{n+1}{2}} \quad (\text{mediana})
+\]
+
+\textbf{Si $n$ es par:}
+\[
+Q_2 = \frac{x_{\tfrac{n}{2}} + x_{\tfrac{n}{2}+1}}{2}
+\]
+
+\small Los cuartiles $Q_1$ y $Q_3$ se calculan análogamente, considerando las posiciones correspondientes.
+\end{frame}
+
+% ==============================
+\section{Medidas de Variabilidad, Momentos y Forma}
+% ==============================
+\begin{frame}{Medidas de variabilidad}
+Son medidas que expresan la \textbf{dispersión} de los datos alrededor de un valor promedio. 
+Una vez localizado el centro de la distribución, interesa cuantificar qué tanto se
+\emph{dispersan} los datos respecto de ese centro.
+\medskip
+
+Casi ningún conjunto de datos tiene todos los valores iguales; por eso el grado de
+dispersión alrededor del promedio no es cero. Lo medimos principalmente con la
+\alert{varianza} y la \alert{desviación estándar}.
+\end{frame}
+
+\begin{frame}{Varianza $S^2$ (muestra) y $\sigma^2$ (población)}
+\textbf{Datos no agrupados (muestra):}
+\[
+S^{2}=\frac{\sum_{j=1}^{n}(x_j-\bar{x})^{2}}{n-1}, 
+\qquad 
+\bar{x}=\frac{1}{n}\sum_{j=1}^{n}x_j.
+\]
+\textbf{Datos agrupados en clases (muestra):}
+\[
+S^{2}=\frac{n\sum x_i^{2}f_i-\left(\sum x_i f_i\right)^{2}}{n(n-1)}, 
+\quad
+n=\sum f_i.
+\]
+\begin{itemize}
+\item $x_j$: dato individual;\; $x_i$: \emph{marca de clase};\; $f_i$: frecuencia.
+\item La varianza es siempre un valor \textbf{no negativo}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Desviación estándar y coeficiente de variación}
+\textbf{Desviación estándar:} es la raíz cuadrada de la varianza.
+\[
+S=\sqrt{S^{2}} \quad (\text{muestra}), 
+\qquad 
+\sigma=\sqrt{\sigma^{2}} \quad (\text{población}).
+\]
+
+\textbf{Coeficiente de variación (CV):} compara dispersiones en escalas distintas.
+\[
+C_V=\frac{S}{\bar{x}}.
+\]
+Se prefiere la distribución con \(\,C_V\,\) menor (más representativa / menos variabilidad relativa).
+\end{frame}
+
+% ==============================
+\subsection{Momentos}
+% ==============================
+\begin{frame}{Momentos (no centrados y centrados)}
+Sea \(y_1,\dots,y_n\) una variable cuantitativa.
+\medskip
+
+\textbf{Momento (no centrado) de orden \(i\) respecto al origen:}
+\[
+\hat{y}^{\,i}=\frac{1}{n}\sum_{j=1}^{n} y_j^{\,i}.
+\]
+\textbf{Momento (centrado) de orden \(i\) respecto a la media \(\bar{y}\):}
+\[
+M_i=\frac{1}{n}\sum_{j=1}^{n}\bigl(y_j-\bar{y}\bigr)^{i}.
+\]
+Casos importantes:
+\[
+M_1=0, 
+\qquad 
+M_2=S^{2}\;(\text{varianza}).
+\]
+\end{frame}
+
+\begin{frame}{Momentos para datos agrupados}
+Si las marcas de clase son \(y_i\) con frecuencias \(f_i\) y \(n=\sum f_i\):
+\[
+\hat{y}^{\,i}=\frac{1}{n}\sum_{i} f_i\,y_i^{\,i},
+\qquad
+M_i=\frac{1}{n}\sum_{i} f_i\,\bigl(y_i-\bar{y}\bigr)^{i}.
+\]
+\end{frame}
+
+% ==============================
+\subsection{Asimetría}
+% ==============================
+\begin{frame}{Asimetría o sesgo}
+La forma de una distribución puede compararse con moda, mediana y media.
+\begin{itemize}
+\item Si la media \(>\) mediana (y/o moda), \textbf{asimetría positiva} (sesgo a la derecha).
+\item Si la media \(<\) mediana (y/o moda), \textbf{asimetría negativa} (sesgo a la izquierda).
+\item Si es simétrica, la asimetría es \textbf{nula}.
+\end{itemize}
+\medskip
+
+\textbf{Coeficiente de asimetría (mediana):}
+\[
+\text{Sesgo} = \frac{3\,(\bar{x}-\mathrm{Me})}{S}.
+\]
+\end{frame}
+
+% ==============================
+\subsection{Curtosis}
+% ==============================
+\begin{frame}{Curtosis o apuntalamiento}
+Mide cuán \textbf{puntiaguda} o \textbf{aplanada} es la forma de la distribución.
+\begin{itemize}
+\item \textbf{Leptocúrtica:} más puntiaguda/estrecha que una normal.
+\item \textbf{Mesocúrtica:} referencia intermedia (p.\,ej.\ normal).
+\item \textbf{Platicúrtica:} más aplanada/anchada.
+\end{itemize}
+\[
+b=\frac{M_{4}}{S^{4}} \;=\; \frac{M_{4}}{M_{2}^{2}},
+\qquad 
+\begin{cases}
+b>0 & \text{leptocúrtica},\\
+b=0 & \text{mesocúrtica},\\
+b<0 & \text{platicúrtica}.
+\end{cases}
+\]
+\end{frame}
+
+\begin{frame}{Curtosis: coeficiente percentil}
+Otra medida basada en cuartiles y percentiles:
+\[
+K=\frac{Q}{P_{90}-P_{10}},
+\qquad 
+Q=\tfrac{1}{2}\,(Q_3-Q_1)
+\quad\text{(rango semi--intercuartil)}.
+\]
+\end{frame}
+
+\begin{frame}{Esquema visual de curtosis}
+\centering
+\begin{tikzpicture}[scale=0.8]
+% Ejes guía
+\draw[gray!40] (-0.2,0) -- (11,0);
+
+% Funciones tipo (no probabilidades exactas: esquema comparativo)
+\def\meso{0.7}
+\def\lepto{1.2}
+\def\plati{0.35}
+
+% Platicúrtica (ancha)
+\draw plot[smooth, domain=0:3, samples=200] (\x, {exp(-(\x-1.5)^2/\plati)}) node at (1.5,-0.25) {Platicúrtica};
+
+% Leptocúrtica (angosta)
+\draw plot[smooth, domain=4:7, samples=200] (\x, {exp(-(\x-5.5)^2/\lepto)}) node at (5.5,-0.25) {Leptocúrtica};
+
+% Mesocúrtica (media)
+\draw plot[smooth, domain=8:11, samples=200] (\x, {exp(-(\x-9.5)^2/\meso)}) node at (9.5,-0.25) {Mesocúrtica};
+
+% Líneas centrales
+\draw[gray!60] (1.5,0) -- (1.5, {exp(-(0)^2/\plati)});
+\draw[gray!60] (5.5,0) -- (5.5, {exp(-(0)^2/\lepto)});
+\draw[gray!60] (9.5,0) -- (9.5, {exp(-(0)^2/\meso)});
+\end{tikzpicture}
+
+\medskip
+\small (Curvas esquemáticas sólo para ilustrar \emph{forma}.)
+\end{frame}
+\end{document}

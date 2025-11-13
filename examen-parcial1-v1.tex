@@ -1,0 +1,184 @@
+\documentclass[11pt,paper=a4,answers,addpoints]{exam}
+\usepackage{graphicx,lastpage,comment}
+\usepackage{upgreek}
+\usepackage{censor}
+\censorruledepth=-.2ex
+\censorruleheight=.1ex
+\hyphenpenalty 10000
+\usepackage[paperheight=10.5in,paperwidth=8.27in,bindingoffset=0in,left=0.8in,right=0.8in, top=1.3in,bottom=1in,headsep=.5\baselineskip]{geometry}
+\flushbottom
+\usepackage[normalem]{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\renewcommand\ULthickness{2pt}
+\setlength\ULdepth{1.5ex}
+\renewcommand{\baselinestretch}{1}
+\pagestyle{empty}
+\usepackage[table]{xcolor}
+
+\pagestyle{headandfoot}
+\headrule
+\newcommand{\continuedmessage}{%
+  \ifcontinuation{\footnotesize Pregunta \ContinuedQuestion\ continua\ldots}{}%
+}
+\runningheader{\footnotesize Programa de Ingeniería de Sistemas}
+{\footnotesize Examen 1 Parcial}
+{\footnotesize Página \thepage\ de \numpages}
+\footrule
+\footer{\footnotesize }
+{}
+{\ifincomplete{\footnotesize Pregunta \IncompleteQuestion\ continua en la siguiente página \ldots}
+  {\iflastpage{\footnotesize Final del examen}{\footnotesize Por favor vea la siguiente página\ldots}}}
+\usepackage{amsfonts,amsmath}
+\usepackage{cleveref}
+\crefname{figure}{figura}{figuras}
+\crefname{question}{pregunta}{preguntas}
+\renewcommand\thequestion{\arabic{question}}
+\renewcommand{\questionlabel}{\thequestion)}
+\renewcommand{\questionshook}{%
+  \setlength{\leftmargin}{0pt}%
+  \setlength{\labelwidth}{-\labelsep}%
+}
+\decimalpoint
+\nopointsinmargin
+\pointpoints{punto}{puntos}
+\marginpointname{\points}
+\pointformat{\boldmath\themarginpoints}
+\bracketedpoints
+\usepackage{quoting,xparse}
+\pointpoints{punto}{puntos}
+\bonuspointpoints{punto extra}{puntos extra}
+\totalformat{Pregunta \thequestion: \totalpoints puntos}
+\hqword{Pregunta}
+\hpgword{Página}
+\hpword{Puntos}
+\hsword{Puntos obtenidos}
+\htword{Total}
+\usepackage{circuitikz}
+\usepackage{color}
+\usepackage{pgfplots,graphicx}
+\pgfplotsset{compat=1.18}
+\usepackage{mathrsfs}
+\newcommand{\Laplace}[1]{\ensuremath{\mathscr{L}{\left\lbrace #1\right\rbrace}}}
+\newcommand{\InvLap}[1]{\ensuremath{\mathscr{L}^{-1}{\left\lbrace #1\right\rbrace}}}
+
+\usepackage{background}
+\backgroundsetup{
+  scale=1,
+  color=black,
+  opacity=1,
+  angle=0,
+  pages=all,
+  position=current page.south west,
+  nodeanchor=south west,
+  vshift=0mm,
+  hshift=0mm,
+  contents={\includegraphics[width=\paperwidth,height=\paperheight]{fondo.pdf}}
+}
+
+\begin{document}
+\noprintanswers
+\shorthandoff{<>}
+\thispagestyle{empty}
+
+%==================== CABECERA ====================
+\begin{center}
+    \textit{\textbf{Estadística Aplicada — Examen Parcial (Versión A)}}\\
+    \small Distribución de Frecuencia · Medidas de Dispersión · Teorema de Bayes
+\end{center}
+\vspace{-.1cm}
+\noindent
+\begin{minipage}[t]{.7\textwidth}%
+  {\bfseries Nombres}: \makebox[.75\textwidth]{\hrulefill} \par
+  {\bfseries Apellidos}: \makebox[.75\textwidth]{\hrulefill} \par
+  {\bfseries Docente}: Ricardo Largaespada
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{.4\textwidth}%
+  {\bfseries Curso}: Estadística Aplicada \par
+  {\bfseries Fecha}: \makebox[2.5cm]{\hrulefill} \par
+  {\bfseries Grupo}: \rule{2.8cm}{.4pt}
+\end{minipage}
+\par\noindent\rule{\textwidth}{1pt}
+
+\noindent\textbf{Instrucciones.} Justifique cada resultado.\hfill Total: 15 puntos.
+
+%==================== INICIO PREGUNTAS ====================
+\begin{questions}
+
+%==================== 1. DISTRIBUCIÓN DE FRECUENCIA ====================
+\question[5] \textbf{Distribución de frecuencia (horas de sueño).}
+
+Un grupo de \textbf{20 estudiantes universitarios} registró cuántas horas durmieron en una noche normal de semana. Los datos (en horas) son los siguientes:\[
+5.8,\ 6.3,\ 7.2,\ 8.1,\ 6.5,\ 7.7,\ 7.1,\ 6.0,\ 5.5,\ 8.0,\ 7.4,\ 6.9,\ 7.6,\ 6.4,\ 7.0,\ 8.3,\ 5.9,\ 6.7,\ 7.3,\ 7.9
+\]
+
+\begin{parts}
+  \part[2] Construya una \textbf{tabla de distribución de frecuencias} utilizando \textbf{5 clases}.
+\begin{center}
+\begin{tabular}{|c|p{1.5cm}|p{1.5cm}|p{2.0cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
+\hline
+\textbf{Clase} & \textbf{Límite inferior} & \textbf{Límite superior} & \textbf{Marca de clase (\(\bar{x}\))} & \textbf{$f$} &  \textbf{$F$} & \textbf{$f\cdot x$} & \textbf{$f_r$} &  \textbf{$F_r$}\\
+\hline
+1 & & & & & & & & \\
+\hline
+2 & & & & &  & & &\\
+\hline
+3 & & & & &  & & &\\
+\hline
+4 & & & & &  & & &\\
+\hline
+5 & & & & &  & & &\\
+\hline
+ \multicolumn{6}{|r|}{\cellcolor{gray!20}\textbf{Total}} & & \cellcolor{gray!20} {\bf Total} &\\
+\hline
+\end{tabular}
+\end{center}
+
+  \part[2] Calcule la \textbf{media, mediana y moda} a partir de la tabla.
+  \fillwithdottedlines{4cm}
+  \part[1] Determine \textbf{cuántas horas como máximo duermen el 75\% de los estudiantes.}
+  \fillwithdottedlines{3cm}
+\end{parts}
+
+%==================== 2. MEDIDAS DE DISPERSIÓN ====================
+\newpage
+\question[5]\textbf{Comparación entre grupos (medidas de dispersión).}
+
+Se registró el tiempo (en horas) que dos grupos de \textbf{programadores} dedicaron a depurar código durante una semana:
+
+\[
+\text{Grupo A: } 4.2,\ 4.6,\ 4.8,\ 5.0,\ 5.4,\ 5.6,\ 5.8,\ 6.2
+\]
+\[
+\text{Grupo B: } 3.8,\ 4.0,\ 4.4,\ 4.7,\ 5.0,\ 5.3,\ 5.7,\ 6.2
+\]
+
+\begin{parts}
+  \part[2\half] Para cada grupo, calcule la \textbf{media}, \textbf{varianza}, \textbf{desviación estándar}.
+  \fillwithdottedlines{3cm}
+  \part[2\half] Compare los resultados y determine \textbf{qué grupo muestra un desempeño más consistente} en sus tiempos de depuración. Considere el \textbf{coeficiente de variación}.
+  \fillwithdottedlines{2cm}
+\end{parts}
+
+%==================== 3. BAYES ====================
+\question[5] \textbf{Teorema de Bayes (detección de spam).}
+
+Un sistema de correo intenta detectar mensajes de \textbf{spam}. Del total de correos recibidos:
+\[
+P(S)=0.05 \quad (\text{correos realmente spam}), \qquad P(S')=0.95 \quad (\text{correos legítimos})
+\]
+El filtro de spam tiene las siguientes características:
+\[
+P(\text{Marcado}\mid S)=0.96, \qquad P(\text{Marcado}\mid S')=0.01.
+\]
+
+\begin{parts}
+  \part[2\half] Calcule \(P(\text{Marcado})\) aplicando la \textbf{ley de la probabilidad total}.
+  \fillwithdottedlines{3cm}
+  \part[2\half] Determine la probabilidad de que un correo \textbf{marcado como spam} sea realmente spam, es decir \(P(S\mid \text{Marcado})\).
+  \fillwithdottedlines{2cm}
+\end{parts}
+
+\end{questions}
+\end{document}

@@ -1,0 +1,139 @@
+\documentclass[11pt,paper=a4,answers,addpoints]{exam}
+\usepackage{graphicx,lastpage,comment}
+\usepackage{upgreek}
+\usepackage{censor}
+\censorruledepth=-.2ex
+\censorruleheight=.1ex
+\hyphenpenalty 10000
+\usepackage[paperheight=10.5in,paperwidth=8.27in,bindingoffset=0in,left=0.8in,right=0.8in, top=1.3in,bottom=1in,headsep=.5\baselineskip]{geometry}
+\flushbottom
+\usepackage[normalem]{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\renewcommand\ULthickness{2pt}
+\setlength\ULdepth{1.5ex}
+\renewcommand{\baselinestretch}{1}
+\pagestyle{empty}
+
+\pagestyle{headandfoot}
+\headrule
+\newcommand{\continuedmessage}{%
+  \ifcontinuation{\footnotesize Pregunta \ContinuedQuestion\ continua\ldots}{}%
+}
+\runningheader{\footnotesize Programa de Ingeniería de Sistemas}
+{\footnotesize Prueba en Parejas — Versión A}
+{\footnotesize Página \thepage\ de \numpages}
+\footrule
+\footer{\footnotesize }
+{}
+{\ifincomplete{\footnotesize Pregunta \IncompleteQuestion\ continua en la siguiente página \ldots}
+  {\iflastpage{\footnotesize Final del examen}{\footnotesize Por favor vea la siguiente página\ldots}}}
+\usepackage{amsfonts,amsmath}
+\usepackage{cleveref}
+\crefname{figure}{figura}{figuras}
+\crefname{question}{pregunta}{preguntas}
+\renewcommand\thequestion{\arabic{question}}
+\renewcommand{\questionlabel}{\thequestion)}
+\renewcommand{\questionshook}{%
+  \setlength{\leftmargin}{0pt}%
+  \setlength{\labelwidth}{-\labelsep}%
+}
+\decimalpoint
+\nopointsinmargin
+\pointpoints{punto}{puntos}
+\marginpointname{\points}
+\pointformat{\boldmath\themarginpoints}
+\bracketedpoints
+\usepackage{quoting,xparse}
+\pointpoints{punto}{puntos}
+\bonuspointpoints{punto extra}{puntos extra}
+\totalformat{Pregunta \thequestion: \totalpoints puntos}
+\hqword{Pregunta}
+\hpgword{Página}
+\hpword{Puntos}
+\hsword{Puntos obtenidos}
+\htword{Total}
+\usepackage{circuitikz}
+\usepackage{color}
+\usepackage{pgfplots,graphicx}
+\pgfplotsset{compat=1.18}
+\usepackage{mathrsfs}
+\newcommand{\Laplace}[1]{\ensuremath{\mathscr{L}{\left\lbrace #1\right\rbrace}}}
+\newcommand{\InvLap}[1]{\ensuremath{\mathscr{L}^{-1}{\left\lbrace #1\right\rbrace}}}
+
+% === Fondo activado ===
+\usepackage{background}
+\backgroundsetup{
+  scale=1,
+  color=black,
+  opacity=1,
+  angle=0,
+  pages=all,
+  position=current page.south west,
+  nodeanchor=south west,
+  vshift=0mm,
+  hshift=0mm,
+  contents={\includegraphics[width=\paperwidth,height=\paperheight]{fondo.pdf}}
+}
+
+\begin{document}
+\noprintanswers
+\shorthandoff{<>}
+\thispagestyle{empty}
+
+%==================== CABECERA ====================
+\begin{center}
+    \textit{\textbf{Investigación de Operaciones I — Prueba en Parejas (Versión C)}}\\
+    \small Problemas de Transporte: EN, Costo Mínimo y VAM
+\end{center}
+\vspace{-.1cm}
+\noindent
+\begin{minipage}[t]{.7\textwidth}%
+  {\bfseries Integrante 1}: \makebox[.75\textwidth]{\hrulefill} \par
+  {\bfseries Integrante 2}: \makebox[.75\textwidth]{\hrulefill} \par
+  {\bfseries Docente}: Ricardo Largaespada
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{.4\textwidth}%
+  {\bfseries Curso}: Investigación de Operaciones I\par
+  {\bfseries Fecha}: \makebox[2.5cm]{\hrulefill} \par
+  {\bfseries Grupo}: \rule{2.8cm}{.4pt}
+\end{minipage}
+\par\noindent\rule{\textwidth}{1pt}
+
+\noindent\textbf{Instrucciones.} Trabaje en parejas y entregue una sola hoja con \textbf{nombres y sección}. Para cada método, muestre la \textbf{asignación}, el \textbf{costo total} y una breve \textbf{justificación}. No optimice con multiplicadores; sólo la SBF. \hfill Total: 10 puntos.
+
+%==================== INICIO PREGUNTA ====================
+\begin{questions}
+\question[10] \textbf{Problema de transporte balanceado (Versión C).}
+
+Considere la siguiente matriz de costos \(c_{ij}\), con \textbf{ofertas} y \textbf{demandas}:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{c|cccc|c}
+ & \multicolumn{4}{c|}{\textbf{Destino}} & \textbf{Oferta}\\
+\cline{2-5}
+\textbf{Origen} & 1 & 2 & 3 & 4 & \\
+\hline
+1 & 7 & 8 & 4 & 8 & 6\\
+2 & 5 & 5 & 9 & 3 & 2\\
+3 & 2 & 5 & 2 & 4 & 13\\
+\hline
+\textbf{Demanda} & 4 & 6 & 5 & 6 &
+\end{tabular}
+\end{center}
+
+\begin{parts}
+  \part[3] Obtenga la \textbf{SBF por Esquina Noroeste}, indicando celdas básicas, unidades asignadas y \textbf{costo total}.
+  \vspace{1.8cm}
+  \part[3] Obtenga la \textbf{SBF por Costo Mínimo}, indicando celdas básicas, unidades asignadas y \textbf{costo total}.
+  \vspace{1.8cm}
+  \part[3] Aplique la \textbf{Aproximación de Vogel (VAM)} y halle la SBF y su \textbf{costo total}.
+  \vspace{1.4cm}
+  \part[1] Compare las tres soluciones: ¿son \textbf{distintas} las SBF? Justifique brevemente.
+  \vspace{0.8cm}
+\end{parts}
+
+\end{questions}
+\end{document}

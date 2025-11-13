@@ -1,0 +1,765 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage[nosetup]{evan}
+\usetheme{Goddard}
+\hypersetup{colorlinks,allcolors=.,urlcolor=magenta}
+\usepackage[table]{xcolor} % Para definir colores en tablas
+\usepackage{graphicx} % Para redimensionar la tabla
+
+\title{Estadística Aplicada}
+\subtitle{Unidad 4: Estimación y Prueba de Hipótesis}
+\author{Ricardo Jesús Largaespada Fernández}
+\institute{Ingeniería de Sistemas, DACTIC, UNI}
+\date{12 de Noviembre, 2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Agenda}
+\tableofcontents
+\end{frame}
+
+%=======================
+\section{Intervalos para la media}
+%=======================
+
+%-----------------------
+\subsection{Idea general}
+%-----------------------
+
+\begin{frame}{¿Qué es un intervalo de confianza para la media?}
+  \begin{itemize}
+    \item Tenemos una población con media desconocida $\mu$.
+    \item Tomamos una muestra aleatoria $X_1,\dots,X_n$.
+    \item Calculamos la media muestral $\bar X$ (estimación puntual de $\mu$).
+    \item Un \textbf{intervalo de confianza} produce un rango de valores
+          donde es razonable que esté $\mu$, con nivel de confianza $(1-\alpha)100\%$.
+  \end{itemize}
+\end{frame}
+
+%-----------------------
+\subsection{Varianza poblacional conocida}
+%-----------------------
+
+\begin{frame}{Supuestos: media con varianza conocida}
+  \begin{itemize}
+    \item $X$ es una variable aleatoria con distribución normal $N(\mu,\sigma^2)$.
+    \item La varianza poblacional $\sigma^2$ es \textbf{conocida}.
+    \item La muestra $X_1,\dots,X_n$ es aleatoria simple.
+    \item Queremos un IC de $(1-\alpha)100\%$ para $\mu$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Distribución de la media muestral}
+  \begin{itemize}
+    \item La media muestral:
+    \[
+      \bar X = \frac{1}{n}\sum_{i=1}^n X_i
+    \]
+    \item Si $X \sim N(\mu,\sigma^2)$, entonces
+    \[
+      \bar X \sim N\!\left(\mu,\frac{\sigma^2}{n}\right).
+    \]
+    \item El estadístico estandarizado:
+    \[
+      Z = \frac{\bar X - \mu}{\sigma/\sqrt{n}} \sim N(0,1).
+    \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{IC para $\mu$ con varianza conocida}
+  A partir de
+  \[
+    P\!\left(-z_{1-\alpha/2} \le Z \le z_{1-\alpha/2}\right) = 1-\alpha,
+  \]
+  sustituimos $Z = \dfrac{\bar X - \mu}{\sigma/\sqrt{n}}$:
+  \[
+    P\!\left(
+      \bar X - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
+      \le \mu \le
+      \bar X + z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
+    \right) = 1-\alpha.
+  \]
+
+  \vspace{0.3cm}
+  \[
+    \boxed{\ \ \bar x \pm z_{1-\alpha/2}\,\dfrac{\sigma}{\sqrt{n}}\ }
+  \]
+
+  \begin{center}
+    \small Usamos la distribución normal estándar $Z$.
+  \end{center}
+\end{frame}
+
+\begin{frame}{Ejemplo: consumo de lubricantes (datos)}
+  \textbf{Ejemplo.}  
+  La cantidad de litros de lubricantes que se consumen en un mes
+  en una cooperativa de transporte se modela como $X\sim N(\mu,81)$
+  ($\sigma=9$).
+
+  \vspace{0.2cm}
+  Se toma una muestra de $n=4$ meses y se obtienen (en litros):
+  \[
+    1200,\; 1250,\; 1195,\; 1190.
+  \]
+
+  \begin{itemize}
+    \item Estimar $\mu$ (estimación puntual).
+    \item Construir un IC del 90\% para $\mu$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo: consumo de lubricantes (solución IC)}
+  \begin{itemize}
+    \item Media muestral:
+    \[
+      \bar x = \frac{1200+1250+1195+1190}{4} = 1208.75\ \text{litros}.
+    \]
+    \item Varianza poblacional conocida: $\sigma = 9$.
+    \item Nivel de confianza 90\% $\Rightarrow \alpha=0.10$,
+          $z_{1-\alpha/2}=z_{0.95}=1.645$.
+  \end{itemize}
+
+  \[
+    1208.75 - 1.645\frac{9}{2} \le \mu \le
+    1208.75 + 1.645\frac{9}{2}
+  \]
+
+  \[
+    1201.34 \le \mu \le 1216.15.
+  \]
+
+  \begin{center}
+    \small El consumo promedio mensual está entre
+    1201.34 y 1216.15 litros con confianza del 90\%.
+  \end{center}
+\end{frame}
+
+%-----------------------
+\subsection{Error máximo y tamaño de muestra}
+%-----------------------
+
+\begin{frame}{Error máximo permisible}
+  Del IC
+  \[
+    \bar x \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},
+  \]
+  el \textbf{ancho} del intervalo es
+  \[
+    \text{L.S.} - \text{L.I.} = 2\varepsilon,
+  \]
+  donde $\varepsilon$ es el \textbf{error máximo permisible}.
+
+  \vspace{0.2cm}
+  Comparando:
+  \[
+    \varepsilon = z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}.
+  \]
+\end{frame}
+
+\begin{frame}{Tamaño de muestra deseado}
+  De
+  \[
+    \varepsilon = z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},
+  \]
+  despejamos $n$:
+
+  \[
+    n =
+    \left(\frac{z_{1-\alpha/2}\,\sigma}{\varepsilon}\right)^2.
+  \]
+
+  \begin{center}
+    \small Nos permite elegir $n$ para un error máximo $\varepsilon$
+    dado un nivel de confianza y una $\sigma$ conocida.
+  \end{center}
+\end{frame}
+
+\begin{frame}{Ejemplo: tamaño de muestra para lubricantes}
+  En el ejemplo anterior se obtuvo un intervalo muy ancho.
+  Se desea reducir la longitud del intervalo a 10 litros
+  manteniendo el mismo nivel de confianza (90\%).
+
+  \begin{itemize}
+    \item Ancho deseado: $2\varepsilon = 10 \Rightarrow \varepsilon=5$.
+    \item $\sigma = 9$, $z_{1-\alpha/2}=1.645$.
+  \end{itemize}
+
+  \[
+    n =
+    \left(\frac{1.645\cdot 9}{5}\right)^2
+    \approx 8.77 \approx 9.
+  \]
+
+  \begin{center}
+    \small Se necesitan al menos 9 meses de muestra para un ancho de 10 litros.
+  \end{center}
+\end{frame}
+
+%-----------------------
+\subsection{Varianza poblacional desconocida}
+%-----------------------
+
+\begin{frame}{Supuestos: media con varianza desconocida}
+  \begin{itemize}
+    \item Población normal $N(\mu,\sigma^2)$.
+    \item $\sigma^2$ es \textbf{desconocida}.
+    \item Usamos la desviación estándar muestral $s$.
+    \item Muestra pequeña: $n < 30$.
+    \item Queremos un IC para $\mu$ con nivel $(1-\alpha)100\%$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Distribución t de Student}
+  El estadístico
+  \[
+    t = \frac{\bar X - \mu}{s/\sqrt{n}}
+  \]
+  tiene distribución \textbf{t de Student} con $n-1$ grados de libertad
+  si la población es normal.
+
+  \vspace{0.2cm}
+  Por tanto:
+  \[
+    P\!\left(
+      -t_{(1-\alpha/2),\,n-1} \le
+      \frac{\bar X - \mu}{s/\sqrt{n}} \le
+      t_{(1-\alpha/2),\,n-1}
+    \right) = 1-\alpha.
+  \]
+\end{frame}
+
+\begin{frame}{IC para $\mu$ con varianza desconocida}
+  Despejando $\mu$ obtenemos:
+  \[
+    P\!\left(
+      \bar X - t_{(1-\alpha/2),\,n-1}\frac{s}{\sqrt{n}}
+      \le \mu \le
+      \bar X + t_{(1-\alpha/2),\,n-1}\frac{s}{\sqrt{n}}
+    \right) = 1-\alpha.
+  \]
+
+  \vspace{0.3cm}
+  \[
+    \boxed{\ \ \bar x \pm t_{(1-\alpha/2),\,n-1}\,\dfrac{s}{\sqrt{n}}\ }
+  \]
+
+  \begin{center}
+    \small Aquí usamos la distribución $t$ de Student.
+  \end{center}
+\end{frame}
+
+\begin{frame}{Ejemplo: promedio de graduados UNI (datos)}
+  Una muestra aleatoria de 18 alumnos graduados en la UNI dio
+  un promedio de $73.3$ en todas las asignaturas de su plan de estudio,
+  con desviación estándar muestral $s = 7.8$.
+
+  \vspace{0.2cm}
+  Suponiendo que las notas se distribuyen normalmente, obtener
+  un IC del 98\% para el promedio de graduados.
+
+  \begin{itemize}
+    \item $n=18$.
+    \item $\bar x = 73.3$.
+    \item $s = 7.8$.
+    \item $\alpha = 0.02 \Rightarrow t_{(1-\alpha/2),\,17} = t_{0.99,17} \approx 2.567$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo: promedio de graduados UNI (solución)}
+  \[
+    \bar x \pm t_{0.99,17}\frac{s}{\sqrt{n}}
+    = 73.3 \pm 2.567\frac{7.8}{\sqrt{18}}.
+  \]
+
+  \[
+    73.3 - 2.567\frac{7.8}{\sqrt{18}}
+    \le \mu \le
+    73.3 + 2.567\frac{7.8}{\sqrt{18}}.
+  \]
+
+  \[
+    72.211 \le \mu \le 74.389.
+  \]
+
+  \begin{center}
+    \small El promedio de notas se encuentra entre 72.211 y 74.389
+    con confianza del 98\%.
+  \end{center}
+\end{frame}
+
+%=======================
+\section{Intervalos para dos medias}
+%=======================
+
+%-----------------------
+\subsection{Varianzas conocidas}
+%-----------------------
+
+\begin{frame}{Dos medias, varianzas conocidas}
+  \begin{itemize}
+    \item Dos poblaciones normales independientes:
+      \[
+        X_1 \sim N(\mu_1,\sigma_1^2),\quad
+        X_2 \sim N(\mu_2,\sigma_2^2).
+      \]
+    \item Varianzas poblacionales $\sigma_1^2$ y $\sigma_2^2$ conocidas.
+    \item Muestras independientes:
+      \[
+        \bar X_1,\; \bar X_2.
+      \]
+    \item Queremos un IC para $\mu_1 - \mu_2$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Distribución de la diferencia de medias}
+  \begin{itemize}
+    \item La diferencia de medias muestrales:
+    \[
+      \bar X_1 - \bar X_2
+    \]
+    tiene distribución normal con media
+    \[
+      \mu = \mu_1 - \mu_2
+    \]
+    y varianza
+    \[
+      \sigma^2 = \frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}.
+    \]
+    \item El estadístico:
+    \[
+      Z = \frac{(\bar X_1 - \bar X_2) - (\mu_1 - \mu_2)}
+                {\sqrt{\dfrac{\sigma_1^2}{n_1} + \dfrac{\sigma_2^2}{n_2}}}
+      \sim N(0,1).
+    \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{IC para $\mu_1 - \mu_2$ (varianzas conocidas)}
+  El IC del $(1-\alpha)100\%$ para $\mu_1 - \mu_2$ es:
+  \[
+    (\bar x_1 - \bar x_2)
+    \pm
+    z_{1-\alpha/2}
+    \sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}.
+  \]
+
+  \[
+    \boxed{
+      (\bar x_1 - \bar x_2) - z_{1-\alpha/2}
+      \sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}
+      \le \mu_1 - \mu_2 \le
+      (\bar x_1 - \bar x_2) + z_{1-\alpha/2}
+      \sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}
+    }
+  \]
+\end{frame}
+
+\begin{frame}{Ejemplo: Sistemas vs Computación (datos)}
+  Se tomó una muestra de:
+  \begin{itemize}
+    \item $n_1 = 50$ estudiantes de Ingeniería en Sistemas,
+          con promedio $\bar x_1 = 65$ y desviación estándar $\sigma_1 = 6$.
+    \item $n_2 = 48$ estudiantes de Computación,
+          con promedio $\bar x_2 = 62$ y desviación estándar $\sigma_2 = 7$.
+  \end{itemize}
+
+  \vspace{0.2cm}
+  Construir un IC del 95\% para $\mu_1 - \mu_2$ (diferencia real de promedios).
+
+  \[
+    \alpha = 0.05,\quad z_{1-\alpha/2} = z_{0.975} = 1.96.
+  \]
+\end{frame}
+
+\begin{frame}{Ejemplo: Sistemas vs Computación (solución)}
+  \[
+    (\bar x_1 - \bar x_2) \pm
+    1.96 \sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}
+    =
+    (65 - 62) \pm
+    1.96\sqrt{\frac{6^2}{50}+\frac{7^2}{48}}.
+  \]
+
+  \[
+    (65 - 62) - 1.96\sqrt{\frac{36}{50}+\frac{49}{48}}
+    \le \mu_1 - \mu_2 \le
+    (65 - 62) + 1.96\sqrt{\frac{36}{50}+\frac{49}{48}}.
+  \]
+
+  \[
+    -0.414 \le \mu_1 - \mu_2 \le 5.586.
+  \]
+
+  \begin{center}
+    \small La diferencia real puede ser $0$, por lo que
+    no hay evidencia de diferencia significativa al 95\%.
+  \end{center}
+\end{frame}
+
+%-----------------------
+\subsection{Varianzas desconocidas e iguales}
+%-----------------------
+
+\begin{frame}{Dos medias, varianzas desconocidas e iguales}
+  \begin{itemize}
+    \item Dos poblaciones normales independientes con
+          varianzas desconocidas pero iguales:
+          $\sigma_1^2 = \sigma_2^2$.
+    \item Muestras independientes:
+          $n_1$, $\bar X_1$, $s_1^2$ y
+          $n_2$, $\bar X_2$, $s_2^2$.
+    \item Queremos un IC para $\mu_1 - \mu_2$.
+    \item Usamos una varianza combinada o \textbf{varianza agrupada}
+          $s_p^2$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Varianza agrupada y estadístico t}
+  La varianza agrupada se define como:
+  \[
+    s_p^2 =
+    \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}.
+  \]
+
+  El estadístico:
+  \[
+    t =
+    \frac{(\bar X_1 - \bar X_2) - (\mu_1 - \mu_2)}
+         {s_p\sqrt{\dfrac{1}{n_1} + \dfrac{1}{n_2}}}
+  \]
+  tiene distribución $t$ de Student con $n_1 + n_2 - 2$ grados de libertad.
+\end{frame}
+
+\begin{frame}{IC para $\mu_1 - \mu_2$ (varianzas desconocidas e iguales)}
+  El IC del $(1-\alpha)100\%$ para $\mu_1 - \mu_2$ es:
+  \[
+    (\bar x_1 - \bar x_2)
+    \pm
+    t_{(1-\alpha/2),\,(n_1+n_2-2)}\,
+    s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}.
+  \]
+
+  \[
+    \boxed{
+      (\bar x_1 - \bar x_2) - t_{(1-\alpha/2),\,n_1+n_2-2}\,
+      s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}
+      \le \mu_1 - \mu_2 \le
+      (\bar x_1 - \bar x_2) + t_{(1-\alpha/2),\,n_1+n_2-2}\,
+      s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}
+    }
+  \]
+\end{frame}
+
+\begin{frame}{Ejemplo: máquinas troqueladoras (datos)}
+  Una empresa tiene dos máquinas troqueladoras de láminas de zinc,
+  ubicadas en Masaya y León.  
+  Se desea comparar el \textbf{tiempo promedio diario} que estas
+  máquinas \textbf{no trabajan}.
+
+  \vspace{0.2cm}
+  Se seleccionan 15 días aleatoriamente para cada máquina:
+
+  \[
+    n_1 = 15,\quad \bar x_1 = 45,\quad s_1 = 2.5,
+  \]
+  \[
+    n_2 = 15,\quad \bar x_2 = 36,\quad s_2 = 3.
+  \]
+
+  Se asume que las varianzas poblacionales son iguales pero desconocidas.
+  Construir un IC del 99\% para $\mu_1 - \mu_2$.
+\end{frame}
+
+\begin{frame}{Ejemplo: máquinas troqueladoras (solución)}
+  \[
+    s_p^2 =
+    \frac{(15-1)2.5^2 + (15-1)3^2}{15+15-2}
+    = 7.362,\quad s_p \approx 2.71.
+  \]
+
+  \[
+    \alpha = 0.01,\quad
+    t_{(1-\alpha/2),\,n_1+n_2-2}
+    = t_{0.995,\,29} \approx 2.756.
+  \]
+
+  IC:
+  \[
+    (\bar x_1 - \bar x_2) \pm
+    2.756\cdot 2.71\sqrt{\frac{1}{15}+\frac{1}{15}}.
+  \]
+
+  \[
+    45-36 - 2.756(2.71)\sqrt{\tfrac{1}{15}+\tfrac{1}{15}}
+    \le \mu_1 - \mu_2 \le
+    45-36 + 2.756(2.71)\sqrt{\tfrac{1}{15}+\tfrac{1}{15}}.
+  \]
+
+  \[
+    6.273 \le \mu_1 - \mu_2 \le 11.727.
+  \]
+
+  \begin{center}
+    \small La máquina 1 deja de trabajar entre 6.273 y 11.727 minutos más
+    que la máquina 2 (99\% de confianza).
+  \end{center}
+\end{frame}
+
+%=======================
+\section{Intervalos para proporciones}
+%=======================
+
+%-----------------------
+\subsection{Una proporción}
+%-----------------------
+
+\begin{frame}{Proporción de éxitos en una población}
+  \begin{itemize}
+    \item Población binomial con parámetro $P$ (proporción de éxitos).
+    \item Muestra de tamaño $n$ con $x$ éxitos.
+    \item Proporción muestral:
+    \[
+      \hat p = \frac{x}{n}.
+    \]
+    \item Para $n$ grande, la distribución binomial se aproxima a la normal.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{IC para una proporción}
+  El IC del $(1-\alpha)100\%$ para $P$ es:
+  \[
+    \hat p \pm
+    z_{1-\alpha/2}\sqrt{\frac{\hat p(1-\hat p)}{n}}.
+  \]
+
+  \[
+    \boxed{
+      \hat p - z_{1-\alpha/2}\sqrt{\frac{\hat p(1-\hat p)}{n}}
+      \le P \le
+      \hat p + z_{1-\alpha/2}\sqrt{\frac{\hat p(1-\hat p)}{n}}
+    }
+  \]
+
+  \begin{center}
+    \small Usamos aproximación normal $Z$.
+  \end{center}
+\end{frame}
+
+\begin{frame}{Ejemplo: bloques defectuosos (datos)}
+  Un fabricante asegura que el porcentaje de bloques defectuosos
+  no es mayor del 5\%.  
+
+  Una ferretería selecciona $n=200$ bloques de su inventario
+  y encuentra $x=19$ defectuosos.
+
+  \begin{itemize}
+    \item ¿Debe sospechar de la afirmación del fabricante?
+    \item Construir un IC del 95\% para $P$.
+  \end{itemize}
+
+  \[
+    \hat p = \frac{19}{200} = 0.095,\quad
+    z_{1-\alpha/2} = z_{0.975} = 1.96.
+  \]
+\end{frame}
+
+\begin{frame}{Ejemplo: bloques defectuosos (solución)}
+  \[
+    \hat p \pm 1.96\sqrt{\frac{\hat p(1-\hat p)}{n}}
+    = \frac{19}{200} \pm 1.96\sqrt{\frac{(19/200)(181/200)}{200}}.
+  \]
+
+  \[
+    0.05436 \le P \le 0.1356.
+  \]
+
+  \[
+    5.43\% \le P \le 13.56\%.
+  \]
+
+  \begin{center}
+    \small El 5\% (valor asegurado) queda a la izquierda del intervalo,
+    por lo que la ferretería tiene motivos para sospechar de la afirmación.
+  \end{center}
+\end{frame}
+
+%-----------------------
+\subsection{Diferencia de proporciones}
+%-----------------------
+
+\begin{frame}{Diferencia de dos proporciones}
+  \begin{itemize}
+    \item Dos poblaciones binomiales, parámetros $P_1$ y $P_2$.
+    \item Muestras independientes:
+      \[
+        \hat p_1 = \frac{x_1}{n_1},\quad
+        \hat p_2 = \frac{x_2}{n_2}.
+      \]
+    \item Para $n_1$ y $n_2$ grandes,
+          $\hat p_1 - \hat p_2$ se aproxima a normal.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{IC para $P_1 - P_2$}
+  La varianza aproximada de $\hat p_1 - \hat p_2$ es
+  \[
+    \frac{\hat p_1(1-\hat p_1)}{n_1} +
+    \frac{\hat p_2(1-\hat p_2)}{n_2}.
+  \]
+
+  El IC del $(1-\alpha)100\%$ para $P_1 - P_2$ es:
+  \[
+    (\hat p_1 - \hat p_2)
+    \pm
+    z_{1-\alpha/2}
+    \sqrt{\frac{\hat p_1(1-\hat p_1)}{n_1} +
+          \frac{\hat p_2(1-\hat p_2)}{n_2}}.
+  \]
+\end{frame}
+
+\begin{frame}{Ejemplo: duración de llantas (datos)}
+  En un estudio sobre la duración de llantas de dos marcas:
+
+  \begin{itemize}
+    \item Marca A: $n_1 = 200$, $x_1 = 34$ llantas que \textbf{no}
+          duran los 48\,000 km.
+    \item Marca B: $n_2 = 200$, $x_2 = 29$ llantas que \textbf{no}
+          duran los 48\,000 km.
+  \end{itemize}
+
+  \vspace{0.2cm}
+  Obtener un IC del 90\% para $P_1 - P_2$
+  (diferencia real de proporciones que no duran la garantía).
+
+  \[
+    \hat p_1 = \frac{34}{200},\quad
+    \hat p_2 = \frac{29}{200},\quad
+    z_{1-\alpha/2} = z_{0.95} = 1.645.
+  \]
+\end{frame}
+
+\begin{frame}{Ejemplo: duración de llantas (solución)}
+  \[
+    (\hat p_1 - \hat p_2)
+    \pm
+    1.645\sqrt{
+      \frac{\hat p_1(1-\hat p_1)}{n_1} +
+      \frac{\hat p_2(1-\hat p_2)}{n_2}
+    }.
+  \]
+
+  \[
+    \left(\tfrac{34}{200} - \tfrac{29}{200}\right)
+    \pm
+    1.645\sqrt{
+      \frac{(34/200)(166/200)}{200} +
+      \frac{(29/200)(171/200)}{200}
+    }.
+  \]
+
+  \[
+    -0.035 \le P_1 - P_2 \le 0.085.
+  \]
+
+  \begin{center}
+    \small Como el $0$ está dentro del intervalo,
+    no hay diferencia significativa en la duración de las dos marcas
+    (90\% de confianza).
+  \end{center}
+\end{frame}
+
+%=======================
+\section{Intervalo para la varianza}
+%=======================
+
+%-----------------------
+\subsection{Varianza y desviación estándar}
+%-----------------------
+
+\begin{frame}{IC para la varianza de una población normal}
+  \begin{itemize}
+    \item Población normal con varianza $\sigma^2$.
+    \item Muestra de tamaño $n$, varianza muestral $S^2$.
+    \item El estadístico
+    \[
+      \chi^2 = \frac{(n-1)S^2}{\sigma^2}
+    \]
+    tiene distribución $\chi^2$ con $n-1$ grados de libertad.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{IC para $\sigma^2$}
+  A partir de los cuantiles
+  $\chi^2_{(1-\alpha/2),\,n-1}$ y
+  $\chi^2_{(\alpha/2),\,n-1}$:
+
+  \[
+    P\!\left(
+      \chi^2_{(1-\alpha/2),\,n-1}
+      \le \frac{(n-1)S^2}{\sigma^2}
+      \le \chi^2_{(\alpha/2),\,n-1}
+    \right) = 1-\alpha.
+  \]
+
+  Despejando $\sigma^2$:
+
+  \[
+    \boxed{
+      \frac{(n-1)S^2}{\chi^2_{(\alpha/2),\,n-1}}
+      \le \sigma^2 \le
+      \frac{(n-1)S^2}{\chi^2_{(1-\alpha/2),\,n-1}}
+    }
+  \]
+
+  Para la desviación estándar basta tomar raíces cuadradas.
+\end{frame}
+
+\begin{frame}{Ejemplo: peso de paquetes de semilla (datos)}
+  Los pesos (kg) de 10 paquetes de semilla son:
+  \[
+    46.4,\ 46.1,\ 45.8,\ 47.0,\ 46.1,\ 45.9,\ 45.8,\ 46.9,\ 45.2,\ 46.0.
+  \]
+
+  \begin{itemize}
+    \item $n = 10$, varianza muestral $S^2 = 0.2862$.
+    \item Nivel de confianza 95\%: $\alpha = 0.05$.
+    \item Cuantiles:
+      \[
+        \chi^2_{0.975,\,9} = 19.02,\quad
+        \chi^2_{0.025,\,9} = 2.70.
+      \]
+  \end{itemize}
+
+  Calcular el IC del 95\% para $\sigma$.
+\end{frame}
+
+\begin{frame}{Ejemplo: peso de paquetes de semilla (solución)}
+  Primero el IC para $\sigma^2$:
+  \[
+    \frac{(10-1)0.2862}{19.02}
+    \le \sigma^2 \le
+    \frac{(10-1)0.2862}{2.70}.
+  \]
+
+  \[
+    0.1355 \le \sigma^2 \le 0.9540.
+  \]
+
+  Tomando raíces cuadradas:
+  \[
+    0.3681 \le \sigma \le 0.9767\ \text{kg}.
+  \]
+
+  \begin{center}
+    \small La desviación estándar del peso de los paquetes de semilla
+    está entre 0.3681 y 0.9767 kg con confianza del 95\%.
+  \end{center}
+\end{frame}
+
+\end{document}
