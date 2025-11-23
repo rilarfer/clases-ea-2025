@@ -1,8 +1,27 @@
 \documentclass{beamer}
 
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-nodecimaldot]{babel}
 \usepackage{amsmath}
+%Hacer cálculos matematicos
+\usepackage{expl3, xparse}
+\ExplSyntaxOn
+\DeclareDocumentCommand { \myformat }{m}
+  { \fp_to_decimal:n { round((#1),9) } }
+\ExplSyntaxOff
+
+%Simbolos matemáticos
+\newcommand{\ndiv}{\hspace{-4pt}\not|\hspace{2pt}}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}
 \usepackage[nosetup]{evan}
 \usetheme{Goddard}
 \hypersetup{colorlinks,allcolors=.,urlcolor=magenta}
@@ -13,7 +32,7 @@
 \subtitle{Unidad 4: Estimación y Prueba de Hipótesis}
 \author{Ricardo Jesús Largaespada Fernández}
 \institute{Ingeniería de Sistemas, DACTIC, UNI}
-\date{12 de Noviembre, 2025}
+\date{13 de Noviembre, 2025}
 
 \begin{document}
 
@@ -284,11 +303,11 @@
   \]
 
   \[
-    72.211 \le \mu \le 74.389.
+    68.581 \le \mu \le 78.019.
   \]
 
   \begin{center}
-    \small El promedio de notas se encuentra entre 72.211 y 74.389
+    \small El promedio de notas se encuentra entre 68.581 y 78.019
     con confianza del 98\%.
   \end{center}
 \end{frame}
@@ -393,12 +412,12 @@
   \]
 
   \[
-    -0.414 \le \mu_1 - \mu_2 \le 5.586.
+    0.414 \le \mu_1 - \mu_2 \le 5.586.
   \]
 
   \begin{center}
-    \small La diferencia real puede ser $0$, por lo que
-    no hay evidencia de diferencia significativa al 95\%.
+    \small La diferencia real no puede ser $0$, por lo que
+     hay evidencia de diferencia significativa al 95\%.
   \end{center}
 \end{frame}
 
@@ -476,37 +495,37 @@
   Construir un IC del 99\% para $\mu_1 - \mu_2$.
 \end{frame}
 
-\begin{frame}{Ejemplo: máquinas troqueladoras (solución)}
+\begin{frame}{Ejemplo: máquinas (solución)}
   \[
     s_p^2 =
     \frac{(15-1)2.5^2 + (15-1)3^2}{15+15-2}
-    = 7.362,\quad s_p \approx 2.71.
+    = 7.625,\quad s_p \approx 2.761.
   \]
 
   \[
     \alpha = 0.01,\quad
     t_{(1-\alpha/2),\,n_1+n_2-2}
-    = t_{0.995,\,29} \approx 2.756.
+    = t_{0.995,\,28} \approx 2.76326.
   \]
 
   IC:
   \[
     (\bar x_1 - \bar x_2) \pm
-    2.756\cdot 2.71\sqrt{\frac{1}{15}+\frac{1}{15}}.
+    2.76326\cdot 2.761\sqrt{\frac{1}{15}+\frac{1}{15}}.
   \]
 
   \[
-    45-36 - 2.756(2.71)\sqrt{\tfrac{1}{15}+\tfrac{1}{15}}
+    45-36 - 2.76326(2.761)\sqrt{\tfrac{1}{15}+\tfrac{1}{15}}
     \le \mu_1 - \mu_2 \le
-    45-36 + 2.756(2.71)\sqrt{\tfrac{1}{15}+\tfrac{1}{15}}.
+    45-36 + 2.76326(2.761)\sqrt{\tfrac{1}{15}+\tfrac{1}{15}}.
   \]
 
   \[
-    6.273 \le \mu_1 - \mu_2 \le 11.727.
+    6.2138 \le \mu_1 - \mu_2 \le 11.7862.
   \]
 
   \begin{center}
-    \small La máquina 1 deja de trabajar entre 6.273 y 11.727 minutos más
+    \small La máquina 1 deja de trabajar entre 6.2138 y 11.7862 minutos más
     que la máquina 2 (99\% de confianza).
   \end{center}
 \end{frame}

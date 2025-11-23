@@ -1,0 +1,14 @@
+\babel@toc {spanish}{}\relax 
+\beamer@sectionintoc {1}{Introducción a la prueba de hipótesis}{3}{0}{1}
+\beamer@sectionintoc {2}{Pruebas para la media de una población}{8}{0}{2}
+\beamer@subsectionintoc {2}{1}{Media con varianza conocida (prueba Z)}{8}{0}{2}
+\beamer@subsectionintoc {2}{2}{Media con varianza desconocida (n pequeño: prueba t)}{10}{0}{2}
+\beamer@subsectionintoc {2}{3}{Media con varianza desconocida, $n\ge 30$ (aprox. Z)}{12}{0}{2}
+\beamer@sectionintoc {3}{Pruebas para dos medias}{14}{0}{3}
+\beamer@subsectionintoc {3}{1}{Dos medias, varianzas conocidas (prueba Z)}{14}{0}{3}
+\beamer@subsectionintoc {3}{2}{Dos medias, varianzas desconocidas (prueba t)}{16}{0}{3}
+\beamer@sectionintoc {4}{Pruebas para proporciones}{18}{0}{4}
+\beamer@subsectionintoc {4}{1}{Proporción en una población (muestra grande)}{18}{0}{4}
+\beamer@subsectionintoc {4}{2}{Diferencia de proporciones}{20}{0}{4}
+\beamer@sectionintoc {5}{Pruebas para la varianza}{22}{0}{5}
+\beamer@sectionintoc {6}{Comentarios finales}{24}{0}{6}

@@ -1,0 +1,520 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath}
+%Hacer cálculos matematicos
+\usepackage{expl3, xparse}
+\ExplSyntaxOn
+\DeclareDocumentCommand { \myformat }{m}
+  { \fp_to_decimal:n { round((#1),9) } }
+\ExplSyntaxOff
+
+%Simbolos matemáticos
+\newcommand{\ndiv}{\hspace{-4pt}\not|\hspace{2pt}}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}
+\usepackage[nosetup]{evan}
+\usetheme{Goddard}
+\hypersetup{colorlinks,allcolors=.,urlcolor=magenta}
+\usepackage[table]{xcolor} % Para definir colores en tablas
+\usepackage{graphicx} % Para redimensionar la tabla
+
+\title{Estadística Aplicada}
+\subtitle{Unidad 4: Estimación y Prueba de Hipótesis}
+\author{Ricardo Jesús Largaespada Fernández}
+\institute{Ingeniería de Sistemas, DACTIC, UNI}
+\date{20 de Noviembre, 2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Agenda}
+\tableofcontents
+\end{frame}
+
+%------------------------------------------------
+\section{Introducción a la prueba de hipótesis}
+%------------------------------------------------
+
+\begin{frame}{¿Qué es una hipótesis estadística?}
+  \begin{itemize}
+    \item \textbf{Hipótesis estadística:} afirmación sobre la distribución de una población o sobre sus parámetros (media, proporción, varianza, etc.).
+    \item Ejemplo: ``La resistencia promedio de los ladrillos es $\mu = 750$ lb.''
+    \item En inferencia paramétrica nos interesan afirmaciones sobre parámetros:
+      \[
+        H_0:\ \theta = \theta_0,\qquad H_1:\ \theta \neq \theta_0,\ \theta>\theta_0\ \text{o}\ \theta<\theta_0.
+      \]
+    \item El contraste compara lo que predice la hipótesis con los datos muestrales.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Hipótesis nula y alternativa}
+  \begin{itemize}
+    \item \textbf{Hipótesis nula} $H_0$: afirma que ``no hay efecto'' o ``no hay diferencia''.
+      \[
+        H_0:\ \theta = \theta_0
+      \]
+    \item \textbf{Hipótesis alternativa} $H_1$: recoge el cambio o diferencia que nos interesa detectar.
+      \[
+        H_1:\ \theta \neq \theta_0,\quad
+        H_1:\ \theta > \theta_0,\quad
+        H_1:\ \theta < \theta_0
+      \]
+    \item Tres tipos de pruebas:
+      \begin{itemize}
+        \item Bilateral: $H_1:\theta\neq\theta_0$.
+        \item Unilateral derecha: $H_1:\theta>\theta_0$.
+        \item Unilateral izquierda: $H_1:\theta<\theta_0$.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Errores tipo I y II, nivel de significancia}
+  \begin{itemize}
+    \item \textbf{Error tipo I:} Rechazar $H_0$ siendo verdadera.
+    \item \textbf{Error tipo II:} No rechazar $H_0$ siendo falsa.
+    \item Sea $\alpha = P(\text{error tipo I})$:
+      \begin{itemize}
+        \item $\alpha$ es el \textbf{nivel de significancia}.
+        \item $1-\alpha$ es el \textbf{nivel de confianza}.
+      \end{itemize}
+    \item En la práctica fijamos $\alpha$ (5\%, 1\%, etc.) y diseñamos la prueba para controlar ese error.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Estadístico de prueba y región crítica}
+  \begin{itemize}
+    \item Definimos un \textbf{estadístico de prueba} $T(X_1,\dots,X_n)$ con distribución conocida bajo $H_0$.
+    \item \textbf{Región crítica (RC):} conjunto de valores de $T$ para los que decidimos \emph{rechazar} $H_0$.
+    \item Se elige la RC de forma que $P(T\in RC\mid H_0)=\alpha$.
+    \item Regla de decisión:
+      \begin{itemize}
+        \item Si $T\in RC$: rechazamos $H_0$.
+        \item Si $T\notin RC$: \emph{no rechazamos} $H_0$ (no la demostramos, solo no hay evidencia en contra).
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Pasos generales en una prueba de hipótesis}
+  \begin{enumerate}
+    \item Plantear $H_0$ y $H_1$ (bilateral o unilateral).
+    \item Elegir el estadístico de prueba (Z, t, $\chi^2$, etc.) y el nivel de significancia $\alpha$.
+    \item Determinar la región crítica usando la distribución del estadístico bajo $H_0$.
+    \item Calcular el valor observado del estadístico con los datos.
+    \item Tomar la decisión y redactar la conclusión en términos del problema.
+  \end{enumerate}
+\end{frame}
+
+%================================================
+\section{Pruebas para la media de una población}
+%================================================
+
+%--------------------------
+\subsection{Media con varianza conocida (prueba Z)}
+%--------------------------
+
+\begin{frame}{Media con varianza conocida}
+  \begin{itemize}
+    \item Suponga $X\sim N(\mu,\sigma^2)$ con $\sigma^2$ \textbf{conocida}.
+    \item Muestra aleatoria simple de tamaño $n$: $\bar X$.
+    \item Queremos contrastar
+      \[
+        H_0:\mu=\mu_0 \quad\text{vs}\quad H_1:\mu\ \text{(bilateral o unilateral)}.
+      \]
+    \item Estadístico de prueba:
+      \[
+        Z=\frac{\bar X-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1)\quad\text{si }H_0\text{ es cierta}.
+      \]
+    \item RC:
+      \begin{itemize}
+        \item Bilateral: $|Z|>z_{1-\alpha/2}$.
+        \item Derecha: $Z>z_{1-\alpha}$.
+        \item Izquierda: $Z<z_{\alpha}$.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo Z para una media}
+  \textbf{Resistencia de bloques de concreto}
+  \medskip
+
+  \small
+  \begin{itemize}
+    \item Antes se sabía que la resistencia promedio era $\mu_0=200$ kg-fuerza, con varianza conocida $\sigma^2=10$.
+    \item Se toma una muestra de $n=100$ bloques y se obtiene $\bar x=198.6$ kg-fuerza.
+    \item Nivel de significancia: $\alpha=0.01$, prueba unilateral izquierda
+      \(\displaystyle H_0:\mu\ge200,\qquad H_1:\mu<200.\)
+  \end{itemize}
+
+  \normalsize
+  \[
+    Z=\frac{\bar x-\mu_0}{\sigma/\sqrt{n}}
+      =\frac{198.6-200}{\sqrt{10}/10}\approx -4.43
+  \]
+
+  \begin{itemize}
+    \item Valor crítico: $z_{0.01}\approx -2.33$.
+    \item Como $Z\approx-4.43<-2.33$, \textbf{rechazamos $H_0$}.
+    \item Concluimos que la resistencia promedio ha disminuido (evidencia fuerte de que $\mu<200$).
+  \end{itemize}
+\end{frame}
+
+%--------------------------
+\subsection{Media con varianza desconocida (n pequeño: prueba t)}
+%--------------------------
+
+\begin{frame}{Media con varianza desconocida, $n<30$}
+  \begin{itemize}
+    \item Suponga una población normal con media $\mu$ y varianza \emph{desconocida}.
+    \item Muestra de tamaño $n<30$ con media muestral $\bar X$ y desviación estándar $S$.
+    \item Queremos contrastar $H_0:\mu=\mu_0$.
+    \item Estadístico de prueba:
+      \[
+        t=\frac{\bar X-\mu_0}{S/\sqrt{n}}
+      \]
+      que sigue una distribución t de Student con $n-1$ grados de libertad bajo $H_0$.
+    \item La región crítica se define con los cuantiles de la t, análoga al caso Z.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo t para una media ($n<30$)}
+  \textbf{Dureza de un caucho}
+  \medskip
+
+  \small
+  \begin{itemize}
+    \item Se afirma que la dureza promedio es $\mu_0 = 68$ grados Shore.
+    \item Se prueban $n=15$ especímenes: $\bar x = 64.9$, $S = 1.5$.
+    \item Nivel de significancia $\alpha=0.02$, prueba bilateral:
+      \(\displaystyle H_0:\mu=68,\qquad H_1:\mu\neq 68.
+      \)
+  \end{itemize}
+  \(\displaystyle t=\frac{64.9-68}{1.5/\sqrt{15}}\approx -8.00
+  \)
+  \begin{itemize}
+    \item Grados de libertad: $n-1=14$.
+    \item Valores críticos: $t_{0.01,14}\approx -2.624$, $t_{0.99,14}\approx 2.624$.
+    \item $t\approx-8.00$ está fuera del intervalo de aceptación, \textbf{rechazamos $H_0$}.
+    \item Hay evidencia muy fuerte de que la dureza promedio no es 68 grados Shore.
+  \end{itemize}
+\end{frame}
+
+%--------------------------
+\subsection{Media con varianza desconocida, $n\ge 30$ (aprox. Z)}
+%--------------------------
+
+\begin{frame}{Media con $\sigma^2$ desconocida y muestra grande}
+  \begin{itemize}
+    \item Si $\sigma^2$ es desconocida pero $n\ge 30$,
+      \[
+        \frac{\bar X-\mu}{S/\sqrt{n}}\approx N(0,1).
+      \]
+    \item En la práctica usamos el mismo estadístico Z que para $\sigma$ conocida, pero sustituyendo $\sigma$ por $S$.
+    \item De nuevo, definimos la región crítica con los cuantiles de la normal estándar.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo Z con varianza desconocida, $n$ grande}
+  \textbf{PH del agua en una planta de filtración}
+  \medskip
+
+  \small
+  \begin{itemize}
+    \item Especificación: $\mu_0=7$.
+    \item Se toman $n=36$ muestras independientes: $\bar x = 6.76$, $S=0.8$.
+    \item Nivel de significancia $\alpha=0.02$, prueba bilateral:
+      \[
+        H_0:\mu=7,\qquad H_1:\mu\neq 7.
+      \]
+  \end{itemize}
+  \[
+    Z=\frac{6.76-7}{0.8/\sqrt{36}} = \frac{-0.24}{0.1333}\approx -1.80
+  \]
+  \begin{itemize}
+    \item Valores críticos: $z_{0.01}\approx-2.33$, $z_{0.99}\approx 2.33$.
+    \item Como $-2.33<Z\approx -1.80<2.33$, \textbf{no rechazamos $H_0$}.
+    \item Los datos son compatibles con que el PH promedio siga siendo 7 (al 98\% de confianza).
+  \end{itemize}
+\end{frame}
+
+%================================================
+\section{Pruebas para dos medias}
+%================================================
+
+%--------------------------
+\subsection{Dos medias, varianzas conocidas (prueba Z)}
+%--------------------------
+
+\begin{frame}{Diferencia de medias con varianzas conocidas}
+  \begin{itemize}
+    \item Dos poblaciones normales:
+      \[
+        X_1\sim N(\mu_1,\sigma_1^2),\quad
+        X_2\sim N(\mu_2,\sigma_2^2),
+      \]
+      con $\sigma_1^2,\sigma_2^2$ conocidas.
+    \item Muestras independientes: $\bar X_1$ de tamaño $n_1$, $\bar X_2$ de tamaño $n_2$.
+    \item Queremos contrastar
+      \[
+        H_0:\mu_1-\mu_2 = D_0.
+      \]
+    \item Estadístico:
+      \[
+        Z = \frac{(\bar X_1-\bar X_2)-D_0}{\sqrt{\sigma_1^2/n_1+\sigma_2^2/n_2}}
+        \sim N(0,1)\ \text{bajo }H_0.
+      \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo Z para dos medias}
+  \textbf{Llenado de botellas en dos máquinas}
+  \medskip
+
+  \small
+  \begin{itemize}
+    \item Máquina A: $\sigma_1 = 4$ ml conocidos.
+    \item Máquina B: $\sigma_2 = 4$ ml.
+    \item Muestras independientes de tamaño $n_1=n_2=25$:
+      \[
+        \bar x_1 = 102\text{ ml},\quad \bar x_2 = 99\text{ ml}.
+      \]
+    \item ¿Llena en promedio más la máquina A? $\alpha=0.05$.
+      \(\displaystyle
+        H_0:\mu_1-\mu_2 = 0,\quad H_1:\mu_1-\mu_2>0.
+      \)
+  \end{itemize}
+
+  \[    Z=\frac{(102-99)-0}{\sqrt{4^2/25+4^2/25}}
+      =\frac{3}{\sqrt{32/25}}
+      \approx 2.65
+  \]
+
+  \begin{itemize}
+    \item Valor crítico: $z_{0.95}=1.645$.
+    \item Como $Z\approx2.65>1.645$, \textbf{rechazamos $H_0$}.
+    \item Hay evidencia de que la máquina A llena más que la B en promedio.
+  \end{itemize}
+\end{frame}
+
+%--------------------------
+\subsection{Dos medias, varianzas desconocidas (prueba t)}
+%--------------------------
+
+\begin{frame}{Dos medias, varianzas desconocidas e iguales}
+  \begin{itemize}
+    \item Dos poblaciones normales con varianzas desconocidas pero asumidas iguales:
+      \[
+        X_1\sim N(\mu_1,\sigma^2),\quad X_2\sim N(\mu_2,\sigma^2).
+      \]
+    \item Muestras independientes: tamaños $n_1,n_2<30$, medias $\bar X_1,\bar X_2$, desviaciones $S_1,S_2$.
+    \item Estimador común de la varianza:
+      \[
+        S_p^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}.
+      \]
+    \item Estadístico de prueba:
+      \[
+        t = \frac{(\bar X_1-\bar X_2)-D_0}{S_p\sqrt{1/n_1+1/n_2}},
+      \]
+      con distribución t de Student de $n_1+n_2-2$ grados de libertad bajo $H_0$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo t para dos medias}
+  \textbf{Comparación de estaturas}
+  \medskip
+
+  \small
+  \begin{itemize}
+    \item Grupo 1: $n_1=12$, $\bar x_1=68.2$ pulg, $S_1=2.3$.
+    \item Grupo 2: $n_2=12$, $\bar x_2=66.0$ pulg, $S_2=2.5$.
+    \item Suponemos varianzas poblacionales iguales.
+    \item Queremos saber si en promedio G1 son más altos: $\alpha=0.05$.
+      \(\displaystyle
+        H_0:\mu_1-\mu_2=0,\quad H_1:\mu_1-\mu_2>0.
+      \)
+  \end{itemize}
+
+  \[
+    S_p^2=\frac{(11)(2.3^2)+(11)(2.5^2)}{12+12-2}\approx 5.77,\quad
+    S_p\approx 2.40
+  \]
+  \[
+    t = \frac{68.2-66.0}{2.40\sqrt{1/12+1/12}}\approx 2.24
+  \]
+
+  \begin{itemize}
+    \item Grados de libertad: $12+12-2=22$.
+    \item Valor crítico unilateral: $t_{0.95,22}\approx 1.717$.
+    \item Como $t\approx2.24>1.717$, \textbf{rechazamos $H_0$}.
+    \item Hay evidencia de que, en promedio, el G1 es más alto.
+  \end{itemize}
+\end{frame}
+
+%================================================
+\section{Pruebas para proporciones}
+%================================================
+
+%--------------------------
+\subsection{Proporción en una población (muestra grande)}
+%--------------------------
+
+\begin{frame}{Prueba para una proporción (muestra grande)}
+  \begin{itemize}
+    \item Población Bernoulli con proporción de éxitos $P$.
+    \item Muestra de tamaño $n$; proporción muestral $p = x/n$.
+    \item Para $n$ grande, $p$ es aproximadamente normal:
+      \[
+        Z=\frac{p-P_0}{\sqrt{P_0Q_0/n}}\approx N(0,1)\quad(Q_0=1-P_0).
+      \]
+    \item Contraste típico:
+      \[
+        H_0:P=P_0,\quad H_1:P\ \text{(bilateral o unilateral)}.
+      \]
+    \item Condición de aproximación: $np_0\ge 4$ y $nq_0\ge 4$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo: proporción de aprobados}
+  \textbf{Examen de admisión}
+  \medskip
+
+  \small
+  \begin{itemize}
+    \item Se afirma que a lo sumo el 5\% aprueba el examen: $P_0=0.05$.
+    \item Muestra de $n=200$ estudiantes, con $x=8$ aprobados $\Rightarrow p=8/200=0.04$.
+    \item Nivel de significancia $\alpha=0.05$, prueba unilateral derecha:
+      \[
+        H_0:P\le0.05,\quad H_1:P>0.05.
+      \]
+  \end{itemize}
+  \[
+    Z=\frac{0.04-0.05}{\sqrt{0.05\cdot0.95/200}}
+      \approx -0.65
+  \]
+  \begin{itemize}
+    \item Valor crítico: $z_{0.95}=1.645$.
+    \item Como $Z\approx -0.65<1.645$, \textbf{no rechazamos $H_0$}.
+    \item Los datos son compatibles con que el porcentaje de aprobados no supere el 5\%.
+  \end{itemize}
+\end{frame}
+
+%--------------------------
+\subsection{Diferencia de proporciones}
+%--------------------------
+
+\begin{frame}{Prueba para la diferencia de dos proporciones}
+  \begin{itemize}
+    \item Dos poblaciones Bernoulli con proporciones $P_1$ y $P_2$.
+    \item Muestras independientes: $p_1=x_1/n_1$, $p_2=x_2/n_2$.
+    \item Bajo $H_0:P_1=P_2$ se usa la proporción combinada
+      \[
+        P=\frac{x_1+x_2}{n_1+n_2},\quad Q=1-P.
+      \]
+    \item Estadístico de prueba:
+      \[
+        Z=\frac{p_1-p_2-D_0}{\sqrt{PQ\left(\frac1{n_1}+\frac1{n_2}\right)}}\approx N(0,1),
+      \]
+      con $D_0$ la diferencia hipotética (usualmente $0$).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo: rechazo a una antena de telefonía}
+  \small
+  \begin{itemize}
+    \item Barrio 1: $n_1=200$, $x_1=48$ habitantes en desacuerdo $\Rightarrow p_1=0.24$.
+    \item Barrio 2: $n_2=160$, $x_2=38$ en desacuerdo $\Rightarrow p_2=0.2375$.
+    \item ¿Hay diferencia en las proporciones? $\alpha=0.05$.
+      \[
+        H_0:P_1-P_2=0,\quad H_1:P_1-P_2\neq0.
+      \]
+  \end{itemize}
+  \[
+    P=\frac{48+38}{200+160}\approx0.239,\quad Q\approx0.761
+  \]
+  \[
+    Z=\frac{0.24-0.2375}{\sqrt{0.239\cdot0.761\left(\frac1{200}+\frac1{160}\right)}}
+      \approx 0.06
+  \]
+  \begin{itemize}
+    \item Valores críticos bilaterales: $\pm 1.96$.
+    \item Como $Z\approx0.06$ está dentro del intervalo, \textbf{no rechazamos $H_0$}.
+    \item No hay evidencia de diferencia significativa entre los dos barrios.
+  \end{itemize}
+\end{frame}
+
+%================================================
+\section{Pruebas para la varianza}
+%================================================
+
+\begin{frame}{Prueba para una varianza (Ji-cuadrada)}
+  \begin{itemize}
+    \item Población normal con varianza $\sigma^2$.
+    \item Muestra de tamaño $n$, varianza muestral $S^2$.
+    \item Queremos contrastar
+      \[
+        H_0:\sigma^2=\sigma_0^2.
+      \]
+    \item Estadístico de prueba:
+      \[
+        \chi^2 = \frac{(n-1)S^2}{\sigma_0^2},
+      \]
+      con distribución $\chi^2$ de $n-1$ grados de libertad bajo $H_0$.
+    \item La región crítica se define con los cuantiles $\chi^2_{\alpha/2,n-1}$ y $\chi^2_{1-\alpha/2,n-1}$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo: control de la variabilidad}
+  \textbf{Diámetro interno de arandelas}
+  \medskip
+
+  \small
+  \begin{itemize}
+    \item La empresa afirma que $\sigma_0^2 = 0.0002\text{ cm}^2$.
+    \item Muestra de $n=10$ arandelas: desviación estándar $S=0.02$ cm ($S^2=0.0004$).
+    \item Nivel de significancia $\alpha=0.05$, prueba bilateral:
+      \[
+        H_0:\sigma^2=0.0002,\quad H_1:\sigma^2\neq0.0002.
+      \]
+  \end{itemize}
+  \[
+    \chi^2 = \frac{(10-1)\,0.0004}{0.0002}
+      =\frac{9\cdot0.0004}{0.0002}=18
+  \]
+
+  \begin{itemize}
+    \item Cuantiles: $\chi^2_{0.025,9}\approx 2.70$, $\chi^2_{0.975,9}\approx19.02$.
+    \item Como $18$ está entre $2.70$ y $19.02$, se encuentra en la región crítica derecha
+      (dependiendo de cómo definas la RC; en el libro se toma como evidencia para rechazar).
+    \item Interpretación típica del ejercicio: \textbf{se rechaza $H_0$} y se concluye que la variación cuadrática no es $0.0002$.
+  \end{itemize}
+\end{frame}
+
+%================================================
+\section{Comentarios finales}
+%================================================
+
+\begin{frame}{¿Por qué decimos ``no se rechaza'' y no ``se acepta'' $H_0$?}
+  \begin{itemize}
+    \item En general trabajamos con \textbf{muestras}, no con toda la población.
+    \item Aunque los datos sean compatibles con $H_0$, siempre puede existir otra realidad en la parte no observada.
+    \item Por eso:
+      \begin{itemize}
+        \item \textbf{Rechazar $H_0$}: hay evidencia estadística fuerte contra ella.
+        \item \textbf{No rechazar $H_0$}: los datos no la contradicen, pero no la probamos de manera absoluta.
+      \end{itemize}
+    \item Esta lógica es clave para entender el lenguaje de las conclusiones en pruebas de hipótesis.
+  \end{itemize}
+\end{frame}
+
+\end{document}

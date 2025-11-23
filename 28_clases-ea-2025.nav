@@ -1,0 +1,85 @@
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\beamer@sectionpages {1}{2}}
+\headcommand {\beamer@subsectionpages {1}{2}}
+\headcommand {\sectionentry {1}{Introducción a la prueba de hipótesis}{3}{Introducción a la prueba de hipótesis}{0}}
+\headcommand {\slideentry {1}{0}{1}{3/3}{}{0}}
+\headcommand {\beamer@framepages {3}{3}}
+\headcommand {\slideentry {1}{0}{2}{4/4}{}{0}}
+\headcommand {\beamer@framepages {4}{4}}
+\headcommand {\slideentry {1}{0}{3}{5/5}{}{0}}
+\headcommand {\beamer@framepages {5}{5}}
+\headcommand {\slideentry {1}{0}{4}{6/6}{}{0}}
+\headcommand {\beamer@framepages {6}{6}}
+\headcommand {\slideentry {1}{0}{5}{7/7}{}{0}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\beamer@sectionpages {3}{7}}
+\headcommand {\beamer@subsectionpages {3}{7}}
+\headcommand {\sectionentry {2}{Pruebas para la media de una población}{8}{Pruebas para la media de una población}{0}}
+\headcommand {\beamer@subsectionpages {8}{7}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{8}{Media con varianza conocida (prueba Z)}}
+\headcommand {\slideentry {2}{1}{1}{8/8}{Media con varianza conocida (prueba Z)}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\slideentry {2}{1}{2}{9/9}{Media con varianza conocida (prueba Z)}{0}}
+\headcommand {\beamer@framepages {9}{9}}
+\headcommand {\beamer@subsectionpages {8}{9}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{10}{Media con varianza desconocida (n pequeño: prueba t)}}
+\headcommand {\slideentry {2}{2}{1}{10/10}{Media con varianza desconocida (n pequeño: prueba t)}{0}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\slideentry {2}{2}{2}{11/11}{Media con varianza desconocida (n pequeño: prueba t)}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\beamer@subsectionpages {10}{11}}
+\headcommand {\beamer@subsectionentry {0}{2}{3}{12}{Media con varianza desconocida, $n\ge 30$ (aprox. Z)}}
+\headcommand {\slideentry {2}{3}{1}{12/12}{Media con varianza desconocida, $n\ge 30$ (aprox. Z)}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\slideentry {2}{3}{2}{13/13}{Media con varianza desconocida, $n\ge 30$ (aprox. Z)}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\beamer@sectionpages {8}{13}}
+\headcommand {\beamer@subsectionpages {12}{13}}
+\headcommand {\sectionentry {3}{Pruebas para dos medias}{14}{Pruebas para dos medias}{0}}
+\headcommand {\beamer@subsectionpages {14}{13}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{14}{Dos medias, varianzas conocidas (prueba Z)}}
+\headcommand {\slideentry {3}{1}{1}{14/14}{Dos medias, varianzas conocidas (prueba Z)}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\slideentry {3}{1}{2}{15/15}{Dos medias, varianzas conocidas (prueba Z)}{0}}
+\headcommand {\beamer@framepages {15}{15}}
+\headcommand {\beamer@subsectionpages {14}{15}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{16}{Dos medias, varianzas desconocidas (prueba t)}}
+\headcommand {\slideentry {3}{2}{1}{16/16}{Dos medias, varianzas desconocidas (prueba t)}{0}}
+\headcommand {\beamer@framepages {16}{16}}
+\headcommand {\slideentry {3}{2}{2}{17/17}{Dos medias, varianzas desconocidas (prueba t)}{0}}
+\headcommand {\beamer@framepages {17}{17}}
+\headcommand {\beamer@sectionpages {14}{17}}
+\headcommand {\beamer@subsectionpages {16}{17}}
+\headcommand {\sectionentry {4}{Pruebas para proporciones}{18}{Pruebas para proporciones}{0}}
+\headcommand {\beamer@subsectionpages {18}{17}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{18}{Proporción en una población (muestra grande)}}
+\headcommand {\slideentry {4}{1}{1}{18/18}{Proporción en una población (muestra grande)}{0}}
+\headcommand {\beamer@framepages {18}{18}}
+\headcommand {\slideentry {4}{1}{2}{19/19}{Proporción en una población (muestra grande)}{0}}
+\headcommand {\beamer@framepages {19}{19}}
+\headcommand {\beamer@subsectionpages {18}{19}}
+\headcommand {\beamer@subsectionentry {0}{4}{2}{20}{Diferencia de proporciones}}
+\headcommand {\slideentry {4}{2}{1}{20/20}{Diferencia de proporciones}{0}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\slideentry {4}{2}{2}{21/21}{Diferencia de proporciones}{0}}
+\headcommand {\beamer@framepages {21}{21}}
+\headcommand {\beamer@sectionpages {18}{21}}
+\headcommand {\beamer@subsectionpages {20}{21}}
+\headcommand {\sectionentry {5}{Pruebas para la varianza}{22}{Pruebas para la varianza}{0}}
+\headcommand {\slideentry {5}{0}{1}{22/22}{}{0}}
+\headcommand {\beamer@framepages {22}{22}}
+\headcommand {\slideentry {5}{0}{2}{23/23}{}{0}}
+\headcommand {\beamer@framepages {23}{23}}
+\headcommand {\beamer@sectionpages {22}{23}}
+\headcommand {\beamer@subsectionpages {22}{23}}
+\headcommand {\sectionentry {6}{Comentarios finales}{24}{Comentarios finales}{0}}
+\headcommand {\slideentry {6}{0}{1}{24/24}{}{0}}
+\headcommand {\beamer@framepages {24}{24}}
+\headcommand {\beamer@partpages {1}{24}}
+\headcommand {\beamer@subsectionpages {24}{24}}
+\headcommand {\beamer@sectionpages {24}{24}}
+\headcommand {\beamer@documentpages {24}}
+\headcommand {\gdef \inserttotalframenumber {24}}
